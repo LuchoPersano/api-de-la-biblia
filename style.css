@@ -1,11 +1,171 @@
+body{
+    opacity: 0;
+    transition: .3s;
+}
+
 *{
     font-family: sans-serif;
     margin: 0;
     padding: 0;
 }
 
-.container{
+body{
     width: 100vw;
     min-height: 100vh;
-    background: #cff;
+    background: rgb(7, 75, 75);
+}
+
+.app{
+    padding: 90px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputs{
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.inputs *{
+    margin: 0 5px;
+    background: none;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 5px 8px 5px 0;
+    color: white;
+}
+
+.inputs input{
+    border-bottom: 2px solid white;
+    /* border-bottom: 2px solid #ffa600; */
+    width: 3em;
+    padding-left: 3px;
+    color: white;
+    
+}
+
+.inputs input::placeholder{
+    color: white;
+}
+
+.inputs input:focus, .inputs input:focus-visible{
+    background: #0002;
+}
+
+input:focus, input:focus-visible{
+    border-radius: 0;
+    outline: none;
+}
+
+.inputs select{
+    /* background: #ffa600; */
+    border-bottom: 2px solid white;
+}
+
+.inputs select *{
+    background: white;
+    color: black;
+}
+
+.btns{
+    display: flex;
+    margin-top: 10px;
+    width: 380px;
+    justify-content: space-between;
+}
+
+.btns .btn{
+    width: 48%;
+    text-align: center;
+    border: 2px solid rgb(10, 141, 141);
+    padding: 6px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+.btns .okBtn{
+    background: rgb(10, 141, 141);
+}
+
+.btns .btn:hover{
+    background: rgb(10, 141, 141);
+}
+
+.btns .btn:active{
+    background: rgb(9, 124, 124);
+}
+
+
+.okPopUp, .loadingPopUp{
+    position: absolute;
+    z-index: 500;
+    color: white;
+}
+
+.okPopUp::before, .loadingPopUp::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.363);
+}
+
+.pContainer{
+    position: fixed;
+    width: 130px;
+    height: 130px;
+    background: rgb(81, 214, 81);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    margin: -65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loadingPopupContainer{
+    position: fixed;
+    width: 130px;
+    height: 130px;
+    background: rgb(97, 97, 97);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    margin: -65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.closePopupBtn{
+    position: relative;
+    left: 50px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.popupIcon{
+    font-size: 45px;
+    margin-top: 10px;
+}
+
+.loadingPopUp .popupIcon{
+    margin-top: 20px;
+    transition: opacity 1s;
+}
+
+.popupText{
+    margin-top: 6px;
+    font-size: 19px;
 }
