@@ -13,6 +13,8 @@ let body = document.getElementById('body');
 let newBtn = document.getElementById('newBtn');
 let okBtn = document.getElementById('okBtn');
 
+let icons = document.getElementsByClassName('material-icons');
+
 let bookInput = document.getElementsByClassName('bookInput');
 let chapterInput = document.getElementsByClassName('chapterInput');
 let verseInput = document.getElementsByClassName('verseInput');
@@ -21,7 +23,7 @@ let variosInput = document.getElementsByClassName('variosInput');
 let inputsGroups = document.getElementsByClassName('inputs');
 
 let okPopUp = `
-    <div class="okPopUp" id="okPopUp">
+    <div class="okPopUp popup" id="okPopUp">
         <div class="pContainer" id="pContainer">
             <div class="closePopupBtn" onclick="del('okPopUp')">
                 <i class="fas fa-times"></i>
@@ -31,18 +33,6 @@ let okPopUp = `
             </div>
             <div class="popupTextContainer" id="popupTextContainer">
                 <p class="popupText" id="popupText">Copiado</p>
-            </div>
-        </div>
-    </div>
-`;
-let loadingPopUp = `
-    <div class="loadingPopUp" id="loadingPopUp">
-        <div class="loadingPopupContainer" id="pContainer">
-            <div class="popupIcon" id="popupIcon">
-                <i class="fas fa-ellipsis-h"></i>
-            </div>
-            <div class="popupTextContainer" id="popupTextContainer">
-                <p class="popupText" id="popupText">Cargando...</p>
             </div>
         </div>
     </div>
@@ -57,6 +47,9 @@ function newIn(){
     console.log('con valor actual de ' + bookInput[existing-1].value + ' ' + chapterInput[existing-1].value + ':' + verseInput[existing-1].value + ' ' + versionInput[existing-1].value);
     let html = `
     <div class="inputs ${existing}" id="inputs${existing}">
+        <div class="delInputs ${existing}" id="delInputs${existing}" onclick="del('inputs${existing}')">
+            <span class="material-icons">close</span>
+        </div>
         <select name="book" id="bookInput${existing}" class="bookInput ${existing}">
             <option value="" disabled>|Antiguo Testamento|</option>
             <option value="Genesis">Génesis</option>
@@ -132,7 +125,6 @@ function newIn(){
         <input name="Verse" type="text" value="1" placeholder="Vers" class="verseInput ${existing}" id="verseInput${existing}">
         <select name="version" class="versionInput 0" id="versionInput${existing}">
             <option value="RVR60">Reina Valera 1960</option>
-            <option value="TLA" disabled>TLA</option>
         </select>
         <!--<input name="varios" type="checkbox" class="variosInput ${existing}" id="variosInput${existing}">-->
     </div>
@@ -146,13 +138,17 @@ function newIn(){
 function okIn(){
     var solicitudes = 0;
     var solicitudesExitosas = 0;
+    var errCode = 0;
     let amount = inputsGroups.length;
     let copy = '';
     console.log('Se ha hecho click en OK');
 
-    app.insertAdjacentHTML('afterbegin', loadingPopUp);
+    var loadingPopup = popUp('loadingPopUp', 'rgb(97, 97, 97)', 'fas fa-ellipsis-h', 'Cargando...', '17px', false)
+    app.insertAdjacentHTML('afterbegin', loadingPopup);
     var icon = document.getElementById('popupIcon');
-    icon.style.opacity = '0';
+    setTimeout(() => {
+        icon.style.opacity = '0';
+    }, 100);
     var loadingIconAnimation = setInterval(() => {
         if(icon.style.opacity == '1'){
             icon.style.opacity = '0';
@@ -160,7 +156,6 @@ function okIn(){
             icon.style.opacity = '1';
         }
     }, 1000);
-
     for(i = 0; i < amount; i++){
         let bookv = bookInput[i].value;
         let chapterv = chapterInput[i].value;
@@ -216,7 +211,7 @@ function okIn(){
     }
 
     var intervalID = setInterval(() => {
-        if(solicitudes == amount){
+        if(solicitudesExitosas == amount){
             setTimeout(() => {
                 for(i = 0; i < 66; i++){
                     copy = copy.replaceAll(librosEN[i], librosES[i]); //Cambia la cita de inglés a Español
@@ -234,33 +229,80 @@ function okIn(){
                 })
             }, 1000);
             clearInterval(intervalID);
+        } else if(solicitudes == amount && solicitudes > solicitudesExitosas){
+            var existingPopups = document.getElementsByClassName('popup');
+            var existingPopup = existingPopups[0];
+            var existingPopupParent = existingPopup.parentNode;
+
+            var errPopupCode = popUp('requestErrorPopUp', '#f44', 'fas fa-exclamation', 'Error', '18px', true);
+            existingPopupParent.removeChild(existingPopup)
+            app.insertAdjacentHTML('afterbegin', errPopupCode)
+            clearInterval(intervalID);
         }
     }, 500);
-
-    // let copy = `hola	hola
-    // que tal	todo bien?`;
-    // navigator.clipboard.writeText(copy)
-    //     .then(() => {
-    //         console.log('copiado');
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //     })
 }
 
 function onload(elementId) {
     document.getElementById(elementId).style.opacity = '1';
 }
 
+function popUp(id, color, iconClass, text, fontSize, closeBtn){
+    var toReturn = `
+        <div class="${id} popup" id="${id}">
+            <div class="pContainer" id="pContainer" style="background: ${color};">
+                <div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>
+                <div class="popupIcon" id="popupIcon">
+                    <i class="${iconClass}"></i>
+                </div>
+                <div class="popupTextContainer" id="popupTextContainer">
+                    <p class="popupText" id="popupText" style="font-size: ${fontSize};">${text}</p>
+                </div>
+            </div>
+        </div>
+    `
+    closeBtnCode = `<div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>`
+    if(closeBtn == false){
+        toReturn = toReturn.replace(closeBtnCode, '');
+    }
+
+    return toReturn
+}
+
 function del(id){
+    if(id.indexOf('inputs') > -1 && inputsGroups.length <= 1){
+        var htmlCode = popUp('errorPopUp', '#f44', 'fas fa-exclamation', 'No se pueden eliminar todos los elementos!', '12px', true);
+        app.insertAdjacentHTML("afterbegin", htmlCode);
+        return
+    }
+
     var element = document.getElementById(id);
     var padre = element.parentNode;
     padre.removeChild(element);
+
+    if(id.indexOf('inputs') > -1){
+        var amount = inputsGroups.length;
+        for(var i = 0; i < amount; i++){
+            inputsGroups[i].className = 'inputs ' + i;
+            inputsGroups[i].id = 'inputs' + i;
+            bookInput[i].className = 'bookInput ' + i;
+            bookInput[i].id = 'bookInput' + i;
+            chapterInput[i].className = 'chapterInput ' + i;
+            chapterInput[i].id = 'chapterInput' + i;
+            verseInput[i].className = 'verseInput ' + i;
+            verseInput[i].id = 'verseInput' + i;
+            versionInput[i].className = 'versionInput ' + i;
+            versionInput[i].id = 'versionInput' + i;
+        }
+    }
 
     if(id == 'okPopUp'){
         let amount = inputsGroups.length;
         for(i = amount; i > 1; i--){
             app.removeChild(inputsGroups[i-1]) 
         } //Elimina los inputs groups hasta que queda uno solo
+        bookInput[0].value = 'Genesis';
+        chapterInput[0].value = '1';
+        verseInput[0].value = '1';
+        versionInput[0].value = 'RVR60';
     }
 }
