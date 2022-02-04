@@ -8,6 +8,7 @@
     <title>Copiar versículos - Iglesia El FARO El Bolsón</title>
     
     <link rel="shortcut icon" href="img/logo_el_faro.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/2e16f541ef.js" crossorigin="anonymous"></script>
 </head>
@@ -15,6 +16,9 @@
     <div class="container" id="container">
         <div class="app" id="app">
             <div class="inputs 0" id="inputs0">
+                <div class="delInputs 0" id="delInputs0" onclick="del('inputs0')">
+                    <span class="material-icons">close</span>
+                </div>
                 <select name="book" id="bookInput0" class="bookInput 0">
                     <option value="" disabled>|Antiguo Testamento|</option>
                     <option value="Genesis">Génesis</option>
@@ -90,7 +94,6 @@
                 <input name="Verse" type="text" value="1" placeholder="Vers" class="verseInput 0" id="verseInput0">
                 <select name="version" class="versionInput 0" id="versionInput0">
                     <option value="RVR60">Reina Valera 1960</option>
-                    <option value="NVI">NVI</option>
                 </select>
                 <!-- <input name="varios" type="checkbox" class="variosInput 0" id="variosInput0"> -->
             </div>
