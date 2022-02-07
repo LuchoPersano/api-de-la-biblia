@@ -5,8 +5,8 @@ const key = '0ba8533cea705c5c9b088985fc09b6b0';
 let prueba = '';
 let textElement = document.getElementById('container');
 
-var librosES = ['Génesis', 'Éxodo', 'Levíticos', 'Números', 'Deutronomio', 'Josué', 'Jueces', 'Rut', '1 Samuel', '2 Samuel', '1 Reyes', '2 Reyes', '1 Crónicas', '2 Crónicas', 'Esdras', 'Nehemías', 'Ester', 'Job', 'Salmos', 'Proverbios', 'Eclesiastés', 'Cantares', 'Isaías', 'Jeremías', 'Lamentaciones', 'Ezequiel', 'Daniel', 'Oseas', 'Joel', 'Amós', 'Abdías', 'Jonás', 'Miqueas', 'Nahúm', 'Habacuc', 'Sofonías', 'Hageo', 'Zacarías', 'Malaquías', 'Mateo', 'Marcos', 'Lucas', 'Juan', 'Hechos', 'Romanos', '1 Corintios', '2 Corintios', 'Gálatas', 'Efesios', 'Filipenses', 'Colosenses', '1 Tesalonicenses', '2 Tesalonicenses', '1 Timoteo', '2 Timoteo', 'Tito', 'Filemón', 'Hebreos', 'Santiago', '1 Pedro', '2 Pedro', '1 Juan', '2 Juan', '3 Juan', 'Judas', 'Apocalipsis']
-var librosEN = ['Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalms', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi', 'Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy','Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation']
+var librosES = ['Génesis', 'Éxodo', 'Levíticos', 'Números', 'Deuteronomio', 'Josué', 'Jueces', 'Rut', '1 Samuel', '2 Samuel', '1 Reyes', '2 Reyes', '1 Crónicas', '2 Crónicas', 'Esdras', 'Nehemías', 'Ester', 'Job', 'Salmos', 'Proverbios', 'Eclesiastés', 'Cantares', 'Isaías', 'Jeremías', 'Lamentaciones', 'Ezequiel', 'Daniel', 'Oseas', 'Joel', 'Amós', 'Abdías', 'Jonás', 'Miqueas', 'Nahúm', 'Habacuc', 'Sofonías', 'Hageo', 'Zacarías', 'Malaquías', 'Mateo', 'Marcos', 'Lucas', 'Juan', 'Hechos', 'Romanos', '1 Corintios', '2 Corintios', 'Gálatas', 'Efesios', 'Filipenses', 'Colosenses', '1 Tesalonicenses', '2 Tesalonicenses', '1 Timoteo', '2 Timoteo', 'Tito', 'Filemón', 'Hebreos', 'Santiago', '1 Pedro', '2 Pedro', '1 Juan', '2 Juan', '3 Juan', 'Judas', 'Apocalipsis']
+var librosEN = ['Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy', 'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings', '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther', 'Job', 'Psalm', 'Proverbs', 'Ecclesiastes', 'Song of Solomon', 'Isaiah', 'Jeremiah', 'Lamentations', 'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah', 'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi', 'Matthew', 'Mark', 'Luke', 'John', 'Acts', 'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians', 'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians', '1 Timothy', '2 Timothy','Titus', 'Philemon', 'Hebrews', 'James', '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation']
 
 let app = document.getElementById('app');
 let body = document.getElementById('body');
@@ -21,6 +21,11 @@ let verseInput = document.getElementsByClassName('verseInput');
 let versionInput = document.getElementsByClassName('versionInput');
 let variosInput = document.getElementsByClassName('variosInput');
 let inputsGroups = document.getElementsByClassName('inputs');
+
+var solicitudes = 0;
+var solicitudesExitosas = 0;
+let amount = inputsGroups.length;
+let copy = '';
 
 let okPopUp = `
     <div class="okPopUp popup" id="okPopUp">
@@ -56,7 +61,7 @@ function newIn(){
             <option value="Exodus">Éxodo</option>
             <option value="Leviticus">Levíticos</option>
             <option value="Numbers">Números</option>
-            <option value="Deutronomy">Deutronomio</option>
+            <option value="Deuteronomy">Deutronomio</option>
             <option value="Joshua">Josué</option>
             <option value="Judges">Jueces</option>
             <option value="Ruth">Rut</option>
@@ -136,11 +141,7 @@ function newIn(){
 }
 
 function okIn(){
-    var solicitudes = 0;
-    var solicitudesExitosas = 0;
-    var errCode = 0;
-    let amount = inputsGroups.length;
-    let copy = '';
+    amount = inputsGroups.length;
     console.log('Se ha hecho click en OK');
 
     var loadingPopup = popUp('loadingPopUp', 'rgb(97, 97, 97)', 'fas fa-ellipsis-h', 'Cargando...', '17px', false)
@@ -156,62 +157,11 @@ function okIn(){
             icon.style.opacity = '1';
         }
     }, 1000);
-    for(i = 0; i < amount; i++){
-        let bookv = bookInput[i].value;
-        let chapterv = chapterInput[i].value;
-        let versev = verseInput[i].value;
-        let versionv = versionInput[i].value;
-        let url = `https://api.biblia.com/v1/bible/content/${versionv}.txt.json?passage=${bookv}${chapterv}.${versev}&eachVerse=[VerseNum]+[VerseText]{{{tab}}}[FullVerseRef]{{{{salto}}}&paragraphs=false&key=${key}`;
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.text);
-                
-                var tocopy = '';
-
-                var salto = 0;
-                var saltos = []
-                
-                while(salto >= 0){
-                    if(salto != 0){
-                        saltos.push(salto);
-                    }
-                    salto = data.text.indexOf('{{{salto}}}', salto + 1);
-                    console.log(salto);
-                }
-                console.log(saltos);
-
-                var tab = '	';
-                var saltodelinea = `
-`;
-                var textConSaltos = data.text;
-
-                for(i = 0; i < saltos.length; i++){
-                    textConSaltos = textConSaltos.replace('{{{{salto}}}', saltodelinea);
-                    textConSaltos = textConSaltos.replace('{{{tab}}}', tab);
-                }
-
-                console.log(textConSaltos);
-                copy += textConSaltos;
-                copy += `
-`;
-                console.log('Loq que se va a copiar:')
-                console.log(copy);
-
-                solicitudes++;
-                solicitudesExitosas++;
-                console.log('solicitudes exitosas: ' + solicitudesExitosas);
-            })
-            .catch(err => {
-                solicitudes++;
-                console.log('Error:')
-                console.log(err);
-            });
-    }
+    doNextReq();
 
     var intervalID = setInterval(() => {
-        if(solicitudesExitosas == amount){
+        if(solicitudesExitosas === amount){
             setTimeout(() => {
                 for(i = 0; i < 66; i++){
                     copy = copy.replaceAll(librosEN[i], librosES[i]); //Cambia la cita de inglés a Español
@@ -229,17 +179,67 @@ function okIn(){
                 })
             }, 1000);
             clearInterval(intervalID);
-        } else if(solicitudes == amount && solicitudes > solicitudesExitosas){
+        } else if(solicitudes === amount){
             var existingPopups = document.getElementsByClassName('popup');
             var existingPopup = existingPopups[0];
             var existingPopupParent = existingPopup.parentNode;
 
             var errPopupCode = popUp('requestErrorPopUp', '#f44', 'fas fa-exclamation', 'Error', '18px', true);
-            existingPopupParent.removeChild(existingPopup)
+            existingPopupParent.removeChild(existingPopup);
             app.insertAdjacentHTML('afterbegin', errPopupCode)
             clearInterval(intervalID);
         }
     }, 500);
+}
+
+function doNextReq(){
+    let bookv = bookInput[solicitudes].value;
+    let chapterv = chapterInput[solicitudes].value;
+    let versev = verseInput[solicitudes].value;
+    let versionv = versionInput[solicitudes].value;
+    let url = `https://api.biblia.com/v1/bible/content/${versionv}.txt.json?passage=${bookv}${chapterv}.${versev}&eachVerse=[VerseNum]+[VerseText]{{{tab}}}[FullVerseRef]{{{{salto}}}&paragraphs=false&key=${key}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            var salto = 0;
+            var saltos = []
+            while(salto >= 0){
+                if(salto != 0){
+                    saltos.push(salto);
+                }
+                salto = data.text.indexOf('{{{salto}}}', salto + 1);
+            }
+
+            var tab = '	';
+            var saltodelinea = `
+`;
+            var textConSaltos = data.text;
+            for(j = 0; j < saltos.length; j++){
+                textConSaltos = textConSaltos.replace('{{{{salto}}}', saltodelinea);
+                textConSaltos = textConSaltos.replace('{{{tab}}}', tab);
+            }
+
+            console.log(textConSaltos);
+            copy += textConSaltos;
+            copy += saltodelinea;
+            console.log('Loq que se va a copiar:')
+            console.log(copy);
+            solicitudes++;
+            solicitudesExitosas++;
+
+            if(solicitudes < amount){
+                doNextReq();
+            }
+        })
+        .catch(err => {
+            console.log('Error:')
+            console.log(err);
+            solicitudes++;
+            if(solicitudes < amount){
+                doNextReq();
+            }
+        })
 }
 
 function onload(elementId) {
