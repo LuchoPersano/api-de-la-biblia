@@ -198,9 +198,39 @@ input:focus, input:focus-visible{
     transition: opacity 1s;
 }
 
-.popupText{
-    margin: 6px 0;
-    font-size: 19px;
+.popupTextContainer{
     text-align: center;
     padding: 0 5px;
+}
+
+.popupText{
+    margin-bottom: 6px;
+    font-size: 19px;
+}
+
+.popupBody{
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.retryBtnContainer{
+    padding: 5px 14px;
+    border-radius: 7px;
+    margin: 6px 0;
+    border: 1px solid white;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.retryBtnContainer:hover{
+    background: #fff;
+}
+
+.retryBtnContainer:hover .retryBtn p{
+    color: #f44;
+}
+
+.retryBtn{
+    font-weight: bold;
+    font-size: 14px;
 }

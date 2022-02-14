@@ -26,6 +26,7 @@ var solicitudes = 0;
 var solicitudesExitosas = 0;
 let amount = inputsGroups.length;
 let copy = '';
+var loadingIconAnimation;
 
 let okPopUp = `
     <div class="okPopUp popup" id="okPopUp">
@@ -150,7 +151,8 @@ function okIn(){
     setTimeout(() => {
         icon.style.opacity = '0';
     }, 100);
-    var loadingIconAnimation = setInterval(() => {
+
+    loadingIconAnimation = setInterval(() => {
         if(icon.style.opacity == '1'){
             icon.style.opacity = '0';
         } else{
@@ -166,17 +168,8 @@ function okIn(){
                 for(i = 0; i < 66; i++){
                     copy = copy.replaceAll(librosEN[i], librosES[i]); //Cambia la cita de inglés a Español
                 }
+                copiar();
 
-                navigator.clipboard.writeText(copy)
-                .then(() => {
-                    console.log('copiado');
-                    app.removeChild(document.getElementById('loadingPopUp'));
-                    clearInterval(loadingIconAnimation);
-                    app.insertAdjacentHTML('afterbegin', okPopUp);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
             }, 1000);
             clearInterval(intervalID);
         } else if(solicitudes === amount){
@@ -190,6 +183,33 @@ function okIn(){
             clearInterval(intervalID);
         }
     }, 500);
+}
+
+function copiar(){
+    navigator.clipboard.writeText(copy)
+    .then(() => {
+        console.log('copiado');
+        app.removeChild(document.getElementsByClassName('popup')[0]);
+        clearInterval(loadingIconAnimation);
+        app.insertAdjacentHTML('afterbegin', okPopUp);
+
+        solicitudes = 0;
+        solicitudesExitosas = 0;
+    })
+    .catch(err => {
+        console.log(err);
+
+        // Abrir popup de error
+        var existingPopups = document.getElementsByClassName('popup');
+        var existingPopup = existingPopups[0];
+        var existingPopupParent = existingPopup.parentNode;
+        var errPopupCode = popUp('requestErrorPopUp', '#f44', 'fas fa-exclamation', 'Error', '18px', true, 'Se ha hecho click fuera de la página durante el proceso', '12px', true);
+        existingPopupParent.removeChild(existingPopup);
+        app.insertAdjacentHTML('afterbegin', errPopupCode);
+
+        solicitudes = 0;
+        solicitudesExitosas = 0;
+    })
 }
 
 function doNextReq(){
@@ -246,7 +266,7 @@ function onload(elementId) {
     document.getElementById(elementId).style.opacity = '1';
 }
 
-function popUp(id, color, iconClass, text, fontSize, closeBtn){
+function popUp(id, color, iconClass, text, fontSize, closeBtn, body, bodyFontSize, retryBtn){
     var toReturn = `
         <div class="${id} popup" id="${id}">
             <div class="pContainer" id="pContainer" style="background: ${color};">
@@ -256,13 +276,29 @@ function popUp(id, color, iconClass, text, fontSize, closeBtn){
                 </div>
                 <div class="popupTextContainer" id="popupTextContainer">
                     <p class="popupText" id="popupText" style="font-size: ${fontSize};">${text}</p>
+                    <p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
                 </div>
             </div>
         </div>
     `
     closeBtnCode = `<div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>`
+    bodyCode = `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>`
     if(closeBtn == false){
         toReturn = toReturn.replace(closeBtnCode, '');
+    }
+    if(retryBtn === true){
+        toReturn = toReturn.replace(`<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
+                </div>`, `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
+                </div>
+        <div class="retryBtnContainer" id="retryBtnContainer">
+            <div class="retryBtn" id="retryBtn" onclick="copiar()">
+                <p class="retryBtnText" id="retryBtnText">Reintentar</p>
+            </div>
+        </div>
+        `)
+    }
+    if(body == undefined){
+        toReturn = toReturn.replace(bodyCode, '')
     }
 
     return toReturn
