@@ -1,19 +1,23 @@
 body{
     opacity: 0;
     transition: .3s;
+    width: 100%;
+    min-height: 100vh;
+    background: rgb(7, 75, 75);
 }
-
-*{
+*:not(ul, ol){
     font-family: sans-serif;
     margin: 0;
     padding: 0;
     color: white;
 }
 
-body{
-    width: 100vw;
-    min-height: 100vh;
-    background: rgb(7, 75, 75);
+div.btn[disabled]{
+    cursor: not-allowed;
+}
+
+div.btn[disabled]:hover{
+    background: none;
 }
 
 .app{
@@ -34,16 +38,6 @@ body{
     border-right: 3px solid transparent;
     border-bottom: 8px solid transparent;
     margin: -3px 0 -4px -32px;
-}
-
-.inputs input, .inputs select{
-    margin: 0 5px;
-    background: none;
-    border: none;
-    border-radius: 0;
-    font-size: 14px;
-    padding: 5px 8px 5px 0;
-    color: white;
 }
 
 .inputs .delInputs {
@@ -72,43 +66,57 @@ body{
     background: #0002;
 }
 
-.inputs input{
+
+
+/* --------------------------------- */
+/* ESTILOS PARA CADA INPUT IDIVIDUAL */
+/* --------------------------------- */
+
+.inputs input, .inputs select{
+    margin: 0 5px;
+    background: none;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    padding: 5px 8px 5px 3px;
+    color: white;
     border-bottom: 2px solid white;
-    /* border-bottom: 2px solid #ffa600; */
-    width: 3em;
-    padding-left: 3px;
-    color: white;
-    
 }
 
-.inputs input::placeholder{
-    color: white;
+.inputs .chapterInput, .inputs .verseInput{
+    width: 3em; 
 }
 
-.inputs input:focus, .inputs input:focus-visible{
+input::placeholder {
+    color: #fff6;
+    transition: .2s;
+}
+input:hover::placeholder {
+    color: #ffff;
+}
+
+.inputs input:focus, .inputs select:focus, .inputs input:focus-visible, .inputs select:focus-visible{
+    border-radius: 0;
+    outline: none;
     background: #0002;
 }
 
-input:focus, input:focus-visible{
-    border-radius: 0;
-    outline: none;
-}
 
-.inputs select{
-    /* background: #ffa600; */
-    border-bottom: 2px solid white;
-}
 
-.inputs select *{
-    background: white;
-    color: black;
-}
+/* -------------------- */
+/* ESTILOS PARA BOTONES */
+/* -------------------- */
 
 .btns{
     display: flex;
     margin-top: 10px;
     width: 380px;
     justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.btns > *{
+    margin-bottom: 7px;
 }
 
 .btns .btn{
@@ -121,6 +129,12 @@ input:focus, input:focus-visible{
     color: white;
     cursor: pointer;
     position: relative;
+    white-space: nowrap;
+}
+
+.btns .tutorialBtn{
+    width: 100%;
+    padding: 6px 0;
 }
 
 .btns .okBtn{
@@ -135,6 +149,9 @@ input:focus, input:focus-visible{
     background: rgb(9, 124, 124);
 }
 
+/* ------------------- */
+/* ESTILOS PARA POPUPS */
+/* ------------------- */
 
 .popup{
     position: absolute;
@@ -233,4 +250,64 @@ input:focus, input:focus-visible{
 .retryBtn{
     font-weight: bold;
     font-size: 14px;
+}
+
+
+/* ---------------- */
+/* PARA EL TUTORIAL */
+/* ---------------- */
+
+.tutorial{
+    /* margin: 0 calc(50vw - (475px / 2)); */
+    margin: 0 5%;
+    border: 2px solid rgb(10, 141, 141);
+    border-bottom: none;
+    padding: 13px 10px;
+    opacity: 0;
+    transition: .5s;
+}
+
+.tutorial h2{
+    font-size: 1.6em;
+    text-decoration: underline;
+}
+
+.tutorial-steps-list{
+    margin-top: 25px;
+}
+
+.tutorial-step{
+    margin-top: 15px;
+}
+
+.tutorial-step::marker{
+    font-size: 90%;
+    font-weight: bold;
+}
+
+.tutorial-step-title{
+    font-size: 1.1em;
+}
+
+.tutorial-step-body{
+    display: flex;
+}
+
+.tutorial-step-text{
+    font-size: 0.9em;
+}
+
+.tutorial-step img{
+    margin-left: 10px;
+    max-height: 6em;
+}
+
+.charging-animation{
+    display: none;
+    margin: 0 auto;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 5px solid rgb(8, 99, 99);
+    border-top: 5px solid rgb(10, 141, 141);
+    transition: all 1s linear;
 }

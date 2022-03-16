@@ -10,103 +10,111 @@
     <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
     <script src="https://kit.fontawesome.com/2e16f541ef.js" crossorigin="anonymous"></script>
 </head>
 <body id="body" onload="onload('body')">
     <div class="container" id="container">
         <div class="app" id="app">
+            <datalist id="booksDataList">
+                <option>Génesis</option>
+                <option>Éxodo</option>
+                <option>Levíticos</option>
+                <option>Números</option>
+                <option>Deutronomio</option>
+                <option>Josué</option>
+                <option>Jueces</option>
+                <option>Rut</option>
+                <option>1 Samuel</option>
+                <option>2 Samuel</option>
+                <option>1 Reyes</option>
+                <option>2 Reyes</option>
+                <option>1 Crónicas</option>
+                <option>2 Crónicas</option>
+                <option>Esdras</option>
+                <option>Nehemías</option>
+                <option>Ester</option>
+                <option>Job</option>
+                <option>Salmos</option>
+                <option>Proverbios</option>
+                <option>Eclesiastés</option>
+                <option>Cantares</option>
+                <option>Isaías</option>
+                <option>Jeremías</option>
+                <option>Lamentaciones</option>
+                <option>Ezequiel</option>
+                <option>Daniel</option>
+                <option>Oseas</option>
+                <option>Joel</option>
+                <option>Amós</option>
+                <option>Abdías</option>
+                <option>Jonás</option>
+                <option>Miqueas</option>
+                <option>Nahum</option>
+                <option>Habacuc</option>
+                <option>Sofonías</option>
+                <option">Hageo</option>
+                <option>Zacarías</option>
+                <option>Malaquías</option>
+                <option>Mateo</option>
+                <option>Marcos</option>
+                <option>Lucas</option>
+                <option>Juan</option>
+                <option>Hechos</option>
+                <option>Romanos</option>
+                <option>1 Corintios</option>
+                <option>2 Corintios</option>
+                <option>Gálatas</option>
+                <option>Efesios</option>
+                <option>Filipenses</option>
+                <option>Colosenses</option>
+                <option>1 Tesalonicenses</option>
+                <option>2 Tesalonicenses</option>
+                <option>1 Timoteo</option>
+                <option>2 Timoteo</option>
+                <option>Tito</option>
+                <option>Filemón</option>
+                <option>Hebreos</option>
+                <option>Santiago</option>
+                <option>1 Pedro</option>
+                <option>2 Pedro</option>
+                <option>1 Juan</option>
+                <option>2 Juan</option>
+                <option>3 Juan</option>
+                <option>Judas</option>
+                <option>Apocalipsis</option>
+            </datalist>
             <div class="inputs 0" id="inputs0">
+                <datalist id="chaptersDatalist0"></datalist>
+
+                <!-- BOTÓN PARA ELIMINAR GRUPO DE INPUTS -->
                 <div class="delInputs 0" id="delInputs0" onclick="del('inputs0')">
                     <span class="material-icons">close</span>
                 </div>
-                <select name="book" id="bookInput0" class="bookInput 0">
-                    <option value="" disabled>|Antiguo Testamento|</option>
-                    <option value="Genesis">Génesis</option>
-                    <option value="Exodus">Éxodo</option>
-                    <option value="Leviticus">Levíticos</option>
-                    <option value="Numbers">Números</option>
-                    <option value="Deuteronomy">Deutronomio</option>
-                    <option value="Joshua">Josué</option>
-                    <option value="Judges">Jueces</option>
-                    <option value="Ruth">Rut</option>
-                    <option value="1Samuel">1 Samuel</option>
-                    <option value="2Samuel">2 Samuel</option>
-                    <option value="1Kings">1 Reyes</option>
-                    <option value="2Kings">2 Reyes</option>
-                    <option value="1Chronicles">1 Crónicas</option>
-                    <option value="2Chronicles">2 Crónicas</option>
-                    <option value="Ezra">Esdras</option>
-                    <option value="Nehemiah">Nehemías</option>
-                    <option value="Esther">Ester</option>
-                    <option value="Job">Job</option>
-                    <option value="Psalms">Salmos</option>
-                    <option value="Proverbs">Proverbios</option>
-                    <option value="Ecclesiastes">Eclesiastés</option>
-                    <option value="Song">Cantares</option>
-                    <option value="Isaiah">Isaías</option>
-                    <option value="Jeremiah">Jeremías</option>
-                    <option value="Lamentations">Lamentaciones</option>
-                    <option value="Ezekiel">Ezequiel</option>
-                    <option value="Daniel">Daniel</option>
-                    <option value="Hosea">Oseas</option>
-                    <option value="Joel">Joel</option>
-                    <option value="Amos">Amós</option>
-                    <option value="Obadiah">Abdías</option>
-                    <option value="Jonah">Jonás</option>
-                    <option value="Micah">Miqueas</option>
-                    <option value="Nahum">Nahum</option>
-                    <option value="Habakkuk">Habacuc</option>
-                    <option value="Zephaniah">Sofonías</option>
-                    <option value="Hagai">Hageo</option>
-                    <option value="Zechariah">Zacarías</option>
-                    <option value="Malachi">Malaquías</option>
-                    <option value="" disabled></option>
-                    <option value="" disabled>|Nuevo Testamento|</option>
-                    <option value="Matthew">Mateo</option>
-                    <option value="Mark">Marcos</option>
-                    <option value="Luke">Lucas</option>
-                    <option value="John">Juan</option>
-                    <option value="Acts">Hechos</option>
-                    <option value="Romans">Romanos</option>
-                    <option value="1Corinthians">1 Corintios</option>
-                    <option value="2Corinthians">2 Corintios</option>
-                    <option value="Galatians">Gálatas</option>
-                    <option value="Ephesians">Efesios</option>
-                    <option value="Philippians">Filipenses</option>
-                    <option value="Colossians">Colosenses</option>
-                    <option value="1Thessalonians">1 Tesalonicenses</option>
-                    <option value="2Thessalonians">2 Tesalonicenses</option>
-                    <option value="1Timothy">1 Timoteo</option>
-                    <option value="2Timothy">2 Timoteo</option>
-                    <option value="Titus">Tito</option>
-                    <option value="Philemon">Filemón</option>
-                    <option value="Hebrews">Hebreos</option>
-                    <option value="James">Santiago</option>
-                    <option value="1Peter">1 Pedro</option>
-                    <option value="2Peter">2 Pedro</option>
-                    <option value="1John">1 Juan</option>
-                    <option value="2John">2 Juan</option>
-                    <option value="3John">3 Juan</option>
-                    <option value="Jude">Judas</option>
-                    <option value="Revelation">Apocalipsis</option>
-                </select>
-                <input name="Chapter" type="text" value="1" placeholder="Cap" id="chapterInput0" class="chapterInput 0">
-                <input name="Verse" type="text" value="1" placeholder="Vers" class="verseInput 0" id="verseInput0">
+
+                <!-- INPUTS -->
+                <input name="book" type="text" placeholder="Libro" id="bookInput0" class="bookInput 0" list="booksDataList" onchange="getAvailableChapters('inputs0')">
+                <input name="Chapter" type="text" placeholder="Cap" id="chapterInput0" class="chapterInput 0" list="chaptersDatalist0">
+                <input name="Verse" type="text" placeholder="Vers" id="verseInput0" class="verseInput 0" list="versesDatalist0">
                 <select name="version" class="versionInput 0" id="versionInput0">
                     <option value="RVR60">Reina Valera 1960</option>
                 </select>
-                <!-- <input name="varios" type="checkbox" class="variosInput 0" id="variosInput0"> -->
             </div>
             <div class="btns" id="btns">
                 <div class="newBtn btn" id="newBtn" onclick="newIn()">
-                    <p class="newBtnText" id="newBtnText"><i class="fas fa-plus"></i> New</p>
+                    <p class="newBtnText" id="newBtnText"><i class="fas fa-plus"></i> Nuevo</p>
                 </div>
                 <div class="okBtn btn" id="okBtn" onclick="okIn()">
                     <p class="okBtnText" id="okBtnText"><i class="fas fa-check"></i> OK</p>
                 </div>
+                <div class="tutorialBtn btn" id="tutorialBtn" onclick="openTutorial()">
+                    <p class="tutorialBtnText" id="tutorialBtnText"><i class="fas fa-question"></i> Tutorial</p>
+                </div>
             </div>
         </div>
+        <div class="charging-animation"></div>
     </div>
+    <script src="functions.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
