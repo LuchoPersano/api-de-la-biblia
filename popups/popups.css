@@ -1,0 +1,106 @@
+.popup{
+    position: absolute;
+    z-index: 500;
+    color: white;
+}
+
+.popup::before{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.363);
+}
+
+.popupContainer{
+    position: fixed;
+    width: 130px;
+    min-height: 130px;
+    background: rgb(81, 214, 81);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    margin: -65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 2px 4px #0005;
+}
+
+.loadingPopupContainer{
+    position: fixed;
+    width: 130px;
+    height: 130px;
+    background: rgb(97, 97, 97);
+    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    margin: -65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.closePopupBtn{
+    position: relative;
+    left: 50px;
+    top: 5px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.popupIcon{
+    font-size: 45px;
+    margin-top: 10px;
+}
+
+.loadingPopUp .popupIcon{
+    margin: 20px 0 15px 0;
+}
+
+.popup-loading-spinner{
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 6px solid rgb(134, 134, 134);
+    border-top: 6px solid rgb(255, 255, 255);
+    animation: spin 1.4s linear infinite;
+}
+
+.popupTextContainer{
+    text-align: center;
+    padding: 0 5px;
+}
+
+.popupText{
+    margin-bottom: 6px;
+    font-size: 19px;
+}
+
+.popupBody{
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.retryBtnContainer{
+    padding: 5px 14px;
+    border-radius: 7px;
+    margin: 6px 0;
+    border: 1px solid white;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.retryBtnContainer:hover{
+    background: #fff;
+}
+
+.retryBtnContainer:hover .retryBtn p{
+    color: #f44;
+}
+
+.retryBtn{
+    font-weight: bold;
+    font-size: 14px;
+}

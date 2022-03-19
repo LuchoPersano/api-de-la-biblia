@@ -16,8 +16,8 @@ function newIn(){
 
     <!-- INPUTS -->
     <input name="book" type="text" placeholder="Libro" id="bookInput${existing}" class="bookInput ${existing}" list="booksDataList" onchange="getAvailableChapters('inputs${existing}')">
-    <input name="Chapter" type="text" placeholder="Cap" id="chapterInput${existing}" class="chapterInput ${existing}" list="chaptersDatalist${existing}">
-    <input name="Verse" type="text" placeholder="Vers" id="verseInput${existing}" class="verseInput ${existing}" list="versesDatalist${existing}">
+    <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput${existing}" class="chapterInput ${existing}" list="chaptersDatalist${existing}">
+    <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput${existing}" class="verseInput ${existing}" list="versesDatalist${existing}">
     <select name="version" class="versionInput ${existing}" id="versionInput${existing}">
         <option value="RVR60">Reina Valera 1960</option>
     </select>
@@ -32,21 +32,7 @@ function newIn(){
 function okIn(){
     amount = inputsGroups.length;
     console.log('Se ha hecho click en OK');
-
-    // Agrega el popup de que está cargando en la pantalla
-    var loadingPopup = popUp('loadingPopUp', 'rgb(97, 97, 97)', 'fas fa-ellipsis-h', 'Cargando...', '17px', false)
-    app.insertAdjacentHTML('afterbegin', loadingPopup);
-    var icon = document.getElementById('popupIcon');
-    setTimeout(() => {
-        icon.style.opacity = '0';
-    }, 100);
-    loadingIconAnimation = setInterval(() => {
-        if(icon.style.opacity == '1'){
-            icon.style.opacity = '0';
-        } else{
-            icon.style.opacity = '1';
-        }
-    }, 1000);
+    insertPopup(popups.popupsArray.find(popup => popup.name == 'cargando').html);
 
     doNextReq();
 
@@ -60,15 +46,9 @@ function okIn(){
             }, 1000);
             clearInterval(intervalID);
         } else if(solicitudes === amount){
-            var existingPopups = document.getElementsByClassName('popup');
-            var existingPopup = existingPopups[0];
-            var existingPopupParent = existingPopup.parentNode;
-
-            var errPopupCode = popUp('requestErrorPopUp', '#f44', 'fas fa-exclamation', 'Error', '18px', true);
-            existingPopupParent.removeChild(existingPopup);
-            app.insertAdjacentHTML('afterbegin', errPopupCode)
+            removeExistingPopups()
+            insertPopup(popups.popupsArray.find(popup => popup.name == 'error').html)
             clearInterval(intervalID);
-
             // Reinicia las variables para la próxima petición
             solicitudes = 0;
             solicitudesExitosas = 0;
@@ -81,9 +61,8 @@ function copiar(){
     navigator.clipboard.writeText(copy)
     .then(() => {
         console.log('copiado');
-        app.removeChild(document.getElementsByClassName('popup')[0]);
-        clearInterval(loadingIconAnimation);
-        app.insertAdjacentHTML('afterbegin', okPopUp);
+        removeExistingPopups()
+        insertPopup(popups.popupsArray.find(e => e.name == 'copiado').html)
 
         // Reinicia las variables para la próxima petición
         solicitudes = 0;
@@ -94,12 +73,8 @@ function copiar(){
         console.log(err);
 
         // Abrir popup de error
-        var existingPopups = document.getElementsByClassName('popup');
-        var existingPopup = existingPopups[0];
-        var existingPopupParent = existingPopup.parentNode;
-        var errPopupCode = popUp('requestErrorPopUp', '#f44', 'fas fa-exclamation', 'Error', '18px', true, 'Se ha hecho click fuera de la página durante el proceso', '12px', true);
-        existingPopupParent.removeChild(existingPopup);
-        app.insertAdjacentHTML('afterbegin', errPopupCode);
+        removeExistingPopups()
+        insertPopup(popups.popupsArray.find(e => e.name == 'copying error').html)
 
         solicitudes = 0;
         solicitudesExitosas = 0;
@@ -118,12 +93,12 @@ function changeBookToEnglish(ESBookString){
 }
 
 function getBibleInfo(version){
-    let url = 'https://api.biblia.com/v1/bible/contents/' + version + '?key=' + key;
+    let url = 'bibles-info/' + version + '.json';
     console.log('Cargando información de la biblia...')
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log('Información de la biblia obtenida on éxito :D')
+            console.log('Información de la biblia obtenida con éxito :D')
             bibleInfo = data;
         })
         .catch(err => console.error(err))
@@ -185,7 +160,7 @@ function onload(elementId) {
 function popUp(id, color, iconClass, text, fontSize, closeBtn, body, bodyFontSize, retryBtn){
     var toReturn = `
         <div class="${id} popup" id="${id}">
-            <div class="pContainer" id="pContainer" style="background: ${color};">
+            <div class="popupContainer" id="popupContainer" style="background: ${color};">
                 <div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>
                 <div class="popupIcon" id="popupIcon">
                     <i class="${iconClass}"></i>
@@ -221,11 +196,7 @@ function popUp(id, color, iconClass, text, fontSize, closeBtn, body, bodyFontSiz
 }
 
 function del(id){
-    if(id.indexOf('inputs') > -1 && inputsGroups.length <= 1){
-        var htmlCode = popUp('errorPopUp', '#f44', 'fas fa-exclamation', 'No se pueden eliminar todos los elementos!', '12px', true);
-        app.insertAdjacentHTML("afterbegin", htmlCode);
-        return
-    }
+    if(id.indexOf('inputs') > -1 && inputsGroups.length <= 1) return
 
     var element = document.getElementById(id);
     var padre = element.parentNode;
@@ -238,16 +209,22 @@ function del(id){
             inputsGroups[i].id = 'inputs' + i;
             bookInput[i].className = 'bookInput ' + i;
             bookInput[i].id = 'bookInput' + i;
+            bookInput[i].setAttribute('onchange', 'getAvailableChapters(\'inputs' + i + '\')');
             chapterInput[i].className = 'chapterInput ' + i;
             chapterInput[i].id = 'chapterInput' + i;
+            chapterInput[i].setAttribute('list', 'chaptersDatalist' + i)
             verseInput[i].className = 'verseInput ' + i;
             verseInput[i].id = 'verseInput' + i;
             versionInput[i].className = 'versionInput ' + i;
             versionInput[i].id = 'versionInput' + i;
+            document.querySelector('#' + inputsGroups[i].id + ' > datalist').id = 'chaptersDatalist' + i;
+            document.querySelector('#' + inputsGroups[i].id + ' > div.delInputs').id = 'delInputs' + i;
+            document.querySelector('#' + inputsGroups[i].id + ' > div.delInputs').className = 'delInputs ' + i;
+            document.querySelector('#' + inputsGroups[i].id + ' > div.delInputs').setAttribute('onclick', 'del(\'inputs' + i + '\')');
         }
     }
 
-    if(id == 'okPopUp'){
+    if(id == 'okPopup'){
         let amount = inputsGroups.length;
         for(i = amount; i > 1; i--){
             app.removeChild(inputsGroups[i-1]) 
@@ -289,7 +266,10 @@ function getAvailableChapters(actualInputsGroup){
         let actualBook = bookInput[actualInputsGroupNumber].value
         let isABook = isItABook('es', actualBook)
         console.log(isABook);
-        if(isABook === false) return
+        if(isABook === false) {
+            updateChaptersDatalist(actualInputsGroupNumber, 0)
+            return
+        }
 
         let englishActualBook = changeBookToEnglish(actualBook)
         let actualBookNumber = getBookNumber(englishActualBook);
@@ -315,30 +295,19 @@ function getBookNumber(bookString){
 }
 
 function openTutorial() {
-    // iniciar animación de carga
-    document.querySelector('.charging-animation').style.display = 'block'
-    let deg = 0;
-    setTimeout(() => {
-        deg = deg + 360;
-        document.querySelector('.charging-animation').style.transform = 'rotate(' + deg + 'deg)'
-    }, 1);
-    let chargingIconAnimation = setInterval(() => {
-        deg = deg + 360;
-        document.querySelector('.charging-animation').style.transform = 'rotate(' + deg + 'deg)'
-    }, 1000);
-
+    // agregar spinner de carga
+    container.insertAdjacentHTML('beforeend', loadingSpinnerHTMLCode)
+    let loadingSpinner = document.querySelector('.container#container > .loading-spinner');
+    
     // realizar petición al servidor del tutorial
     fetch('tutorial.html')
         .then(response => {
             return response.text()
         })
         .then(data => {
-            // finalizar animación de carga
-            clearInterval(chargingIconAnimation)
-            deg = 0;
-            document.querySelector('.charging-animation').style.display = 'none';
-            document.querySelector('.charging-animation').style.transform = 'rotate(' + deg + 'deg)'
-
+            // eliminar spinner de carga
+            loadingSpinner.remove()
+            
             // agregar tutorial al documento
             container.insertAdjacentHTML('beforeend', data)
             setTimeout(() => {
@@ -349,4 +318,46 @@ function openTutorial() {
             tutorialBtn.removeAttribute('onclick')
             tutorialBtn.setAttribute('disabled', '')
         })
+}
+
+function getPopups(){
+    console.log('Cargando popups...')
+    fetch('popups/popups.json')
+        .then(response => response.json())
+        .then(data => {
+            console.log('>>>Popups obtenidos correctamente')
+            popups = data;
+        })
+        .catch(err => {
+            console.error('>>>Error cargando popups. Reintentando...')
+            retry(getPopups, 5000)
+        })
+}
+
+function retry(func, time){
+    return setTimeout(() => func(), time)
+}
+
+function bootActions(){
+    getBibleInfo('RVR60');
+    getPopups();
+}
+
+function toHTML(stringElement){
+    let temp = document.createElement('div');
+    temp.innerHTML = stringElement;
+    return temp.firstChild
+}
+
+function removeExistingPopups(){
+    var existingPopups = document.querySelectorAll('.popup');
+    if(existingPopups){
+        existingPopups.forEach(popup => {
+        popup.remove()
+    });
+    }
+}
+
+function insertPopup(popup){
+    app.insertAdjacentHTML('afterbegin', popup)
 }
