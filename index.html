@@ -8,10 +8,13 @@
     <title>Copiar versículos - Iglesia El FARO El Bolsón</title>
     
     <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+    <link rel="stylesheet" href="icons/google/google.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
-    <script src="https://kit.fontawesome.com/2e16f541ef.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="popups/popups.css">
+    <!-- <script src="https://kit.fontawesome.com/2e16f541ef.js" crossorigin="anonymous"></script> -->
+    <script src="icons/fontawesome/2e16f541ef.js" crossorigin="anonymous"></script>
 </head>
 <body id="body" onload="onload('body')">
     <div class="container" id="container">
@@ -21,7 +24,7 @@
                 <option>Éxodo</option>
                 <option>Levíticos</option>
                 <option>Números</option>
-                <option>Deutronomio</option>
+                <option>Deuteronomio</option>
                 <option>Josué</option>
                 <option>Jueces</option>
                 <option>Rut</option>
@@ -93,9 +96,9 @@
                 </div>
 
                 <!-- INPUTS -->
-                <input name="book" type="text" placeholder="Libro" id="bookInput0" class="bookInput 0" list="booksDataList" onchange="getAvailableChapters('inputs0')">
-                <input name="Chapter" type="text" placeholder="Cap" id="chapterInput0" class="chapterInput 0" list="chaptersDatalist0">
-                <input name="Verse" type="text" placeholder="Vers" id="verseInput0" class="verseInput 0" list="versesDatalist0">
+                <input name="book" type="text" placeholder="Libro" id="bookInput0" class="bookInput 0" list="booksDataList" autocomplete="off" onchange="getAvailableChapters('inputs0')">
+                <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput0" class="chapterInput 0" list="chaptersDatalist0" autocomplete="off">
+                <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput0" class="verseInput 0" list="versesDatalist0" autocomplete="off">
                 <select name="version" class="versionInput 0" id="versionInput0">
                     <option value="RVR60">Reina Valera 1960</option>
                 </select>
@@ -112,7 +115,6 @@
                 </div>
             </div>
         </div>
-        <div class="charging-animation"></div>
     </div>
     <script src="functions.js"></script>
     <script src="script.js"></script>

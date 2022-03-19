@@ -18,6 +18,10 @@
         font-size: 1.1em;
     }
 
+    .inputs input[type="text"]::placeholder{
+        width: 100%;
+    }
+
     .inputs > *:hover::placeholder{
         color: #fff6;
     }
@@ -40,10 +44,20 @@
     /* Para los botones */
 
     .btns{
-        width: 90%; max-width: 340px; min-width: 100px;
+        width: 90%; max-width: 340px; min-width: 220px;
     }
 
-    /*  */
+    .btns .btn:hover{
+        background: none;
+    }
+
+    /* Tutorial */
+
+    .tutorial{
+        width: 90%; max-width: 340px; min-width: 220px;
+        margin: auto;
+        box-sizing: border-box;
+    }
 
     .tutorial-step-body{
         flex-direction: column;

@@ -95,6 +95,14 @@ input:hover::placeholder {
     color: #ffff;
 }
 
+.inputs .chapterInput::placeholder{
+    width: 26px;
+}
+
+.inputs .verseInput::placeholder{
+    width: 28px;
+}
+
 .inputs input:focus, .inputs select:focus, .inputs input:focus-visible, .inputs select:focus-visible{
     border-radius: 0;
     outline: none;
@@ -130,6 +138,7 @@ input:hover::placeholder {
     cursor: pointer;
     position: relative;
     white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .btns .tutorialBtn{
@@ -147,109 +156,6 @@ input:hover::placeholder {
 
 .btns .btn:active{
     background: rgb(9, 124, 124);
-}
-
-/* ------------------- */
-/* ESTILOS PARA POPUPS */
-/* ------------------- */
-
-.popup{
-    position: absolute;
-    z-index: 500;
-    color: white;
-}
-
-.popup::before{
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.363);
-}
-
-.pContainer{
-    position: fixed;
-    width: 130px;
-    min-height: 130px;
-    background: rgb(81, 214, 81);
-    border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    margin: -65px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.loadingPopupContainer{
-    position: fixed;
-    width: 130px;
-    height: 130px;
-    background: rgb(97, 97, 97);
-    border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    margin: -65px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.closePopupBtn{
-    position: relative;
-    left: 50px;
-    top: 5px;
-    cursor: pointer;
-    font-size: 17px;
-}
-
-.popupIcon{
-    font-size: 45px;
-    margin-top: 10px;
-}
-
-.loadingPopUp .popupIcon{
-    margin-top: 20px;
-    transition: opacity 1s;
-}
-
-.popupTextContainer{
-    text-align: center;
-    padding: 0 5px;
-}
-
-.popupText{
-    margin-bottom: 6px;
-    font-size: 19px;
-}
-
-.popupBody{
-    margin-bottom: 6px;
-    font-size: 15px;
-}
-
-.retryBtnContainer{
-    padding: 5px 14px;
-    border-radius: 7px;
-    margin: 6px 0;
-    border: 1px solid white;
-    transition: .3s;
-    cursor: pointer;
-}
-
-.retryBtnContainer:hover{
-    background: #fff;
-}
-
-.retryBtnContainer:hover .retryBtn p{
-    color: #f44;
-}
-
-.retryBtn{
-    font-weight: bold;
-    font-size: 14px;
 }
 
 
@@ -302,12 +208,21 @@ input:hover::placeholder {
     max-height: 6em;
 }
 
-.charging-animation{
-    display: none;
+.loading-spinner{
+    /* display: none; */
     margin: 0 auto;
     width: 30px; height: 30px;
     border-radius: 50%;
     border: 5px solid rgb(8, 99, 99);
     border-top: 5px solid rgb(10, 141, 141);
-    transition: all 1s linear;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
 }
