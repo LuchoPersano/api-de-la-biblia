@@ -25,7 +25,7 @@
         }
     }, {
         "name": "cargando",
-        "html": "<div class=\"loadingPopUp popup\" id=\"loadingPopUp\">\n            <div class=\"popupContainer\" id=\"popupContainer\" style=\"background: rgb(97, 97, 97);\">\n                <div class=\"popupIcon\" id=\"popupIcon\">\n                    <div class=\"popup-loading-spinner\"></div>\n                </div>\n                <div class=\"popupTextContainer\" id=\"popupTextContainer\">\n                    <p class=\"popupText\" id=\"popupText\" style=\"font-size: 17px;\">Cargando...</p>\n                    </div>\n            </div>\n        </div>",
+        "html": "<div class=\"loadingPopUp popup\" id=\"loadingPopUp\">\n            <div class=\"popupContainer\" id=\"popupContainer\" style=\"background: rgb(97, 97, 97);\">\n                <div class=\"popupIcon\" id=\"popupIcon\">\n                    <svg class=\"spinner\" viewBox=\"0 0 50 50\">\n                            <circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle>\n                        </svg>\n                </div>\n                <div class=\"popupTextContainer\" id=\"popupTextContainer\">\n                    <p class=\"popupText\" id=\"popupText\" style=\"font-size: 17px;\">Cargando...</p>\n                    </div>\n            </div>\n        </div>",
         "properties": {
             "title": "Cargando",
             "id": "loadingPopup",

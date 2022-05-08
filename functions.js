@@ -31,11 +31,8 @@ function newIn(){
 
 function okIn(){
     amount = inputsGroups.length;
-    console.log('Se ha hecho click en OK');
     insertPopup(popups.popupsArray.find(popup => popup.name == 'cargando').html);
-
     doNextReq();
-
     var intervalID = setInterval(() => {
         if(solicitudesExitosas === amount){
             setTimeout(() => {
@@ -111,6 +108,10 @@ function doNextReq(){
     let versionv = versionInput[solicitudes].value;
     let url = `https://api.biblia.com/v1/bible/content/${versionv}.txt.json?passage=${bookv}${chapterv}.${versev}&eachVerse=[VerseNum]+[VerseText]{{{tab}}}[FullVerseRef]{{{{salto}}}&paragraphs=false&key=${key}`;
 
+    if(versev === 'todos'){
+        getTheWholeChapter(bookv, chapterv, versionv)
+        return
+    } 
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -122,24 +123,10 @@ function doNextReq(){
                 }
                 salto = data.text.indexOf('{{{salto}}}', salto + 1);
             }
-
-            var tab = '	';
-            var saltodelinea = `
-`;
-            var textConSaltos = data.text;
-            for(j = 0; j < saltos.length; j++){
-                textConSaltos = textConSaltos.replace('{{{{salto}}}', saltodelinea);
-                textConSaltos = textConSaltos.replace('{{{tab}}}', tab);
-            }
-
-            console.log(textConSaltos);
-            copy += textConSaltos;
-            copy += saltodelinea;
-            console.log('Loq que se va a copiar:')
-            console.log(copy);
+            var textConSaltos = data.text.replaceAll('{{{{salto}}}', saltodelinea).replaceAll('{{{tab}}}', tab);
+            copy += textConSaltos + saltodelinea;
             solicitudes++;
             solicitudesExitosas++;
-
             if(solicitudes < amount){
                 doNextReq();
             }
@@ -151,6 +138,34 @@ function doNextReq(){
                 doNextReq();
             }
         })
+}
+
+let hasFinished = false;
+let actualVerse = 1;
+
+function getTheWholeChapter(book, chapter, version){
+    getNextVerse()
+    function getNextVerse(){
+        let actualUrl = `https://api.biblia.com/v1/bible/content/${version}.txt.json?passage=${book}${chapter}.${actualVerse}&eachVerse=[VerseNum]+[VerseText]{{{tab}}}[FullVerseRef]{{{{salto}}}&paragraphs=false&key=${key}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var salto = 0;
+                var saltos = []
+                while(salto >= 0){
+                    if(salto != 0){
+                        saltos.push(salto);
+                    }
+                    salto = data.text.indexOf('{{{salto}}}', salto + 1);
+                }
+                var textConSaltos = data.text.replaceAll('{{{{salto}}}', saltodelinea).replaceAll('{{{tab}}}', tab);
+                copy += textConSaltos;
+                
+            })
+    }
+    if(hasFinished){
+
+    }
 }
 
 function onload(elementId) {
@@ -276,6 +291,18 @@ function getAvailableChapters(actualInputsGroup){
         let availableChapters = bibleInfo.books[actualBookNumber].chapters;
         updateChaptersDatalist(actualInputsGroupNumber, availableChapters.length)
     }
+}
+
+function getAvailableVerses(actualInputsGroup){
+    let actualInputsGroupNumber = actualInputsGroup.classList[1]
+    let actualBook = bookInput[actualInputsGroupNumber].value
+    let isABook = isItABook('es', actualBook)
+    console.log(isABook);
+    if(isABook === false) {
+        // review
+        return
+    }
+    console.log(actualInputsGroup)
 }
 
 function updateChaptersDatalist(inputGroupsNumber, chapters){

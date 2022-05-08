@@ -31,7 +31,10 @@ var solicitudesExitosas = 0;
 let amount = inputsGroups.length;
 let copy = '';
 var loadingIconAnimation;
-var loadingSpinnerHTMLCode = '<div class="loading-spinner"></div>'
+var loadingSpinnerHTMLCode = '<div class="loading-spinner"></div>';
+
+var tab = '\t';
+var saltodelinea = '\n'
 
 let okPopup = `
     <div class="okPopup popup" id="okPopup">
