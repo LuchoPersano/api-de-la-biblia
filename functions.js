@@ -8,6 +8,7 @@ function newIn(){
     let html = `
     <div class="inputs ${existing}" id="inputs${existing}">
     <datalist id="chaptersDatalist${existing}"></datalist>
+    <datalist id="versesDatalist${existing}"></datalist>
 
     <!-- BOTÓN PARA ELIMINAR GRUPO DE INPUTS -->
     <div class="delInputs ${existing}" id="delInputs${existing}" onclick="del('inputs${existing}')">
@@ -172,43 +173,43 @@ function onload(elementId) {
     document.getElementById(elementId).style.opacity = '1';
 }
 
-function popUp(id, color, iconClass, text, fontSize, closeBtn, body, bodyFontSize, retryBtn){
-    var toReturn = `
-        <div class="${id} popup" id="${id}">
-            <div class="popupContainer" id="popupContainer" style="background: ${color};">
-                <div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>
-                <div class="popupIcon" id="popupIcon">
-                    <i class="${iconClass}"></i>
-                </div>
-                <div class="popupTextContainer" id="popupTextContainer">
-                    <p class="popupText" id="popupText" style="font-size: ${fontSize};">${text}</p>
-                    <p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
-                </div>
-            </div>
-        </div>
-    `
-    closeBtnCode = `<div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>`
-    bodyCode = `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>`
-    if(closeBtn == false){
-        toReturn = toReturn.replace(closeBtnCode, '');
-    }
-    if(retryBtn === true){
-        toReturn = toReturn.replace(`<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
-                </div>`, `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
-                </div>
-        <div class="retryBtnContainer" id="retryBtnContainer">
-            <div class="retryBtn" id="retryBtn" onclick="copiar()">
-                <p class="retryBtnText" id="retryBtnText">Reintentar</p>
-            </div>
-        </div>
-        `)
-    }
-    if(body == undefined){
-        toReturn = toReturn.replace(bodyCode, '')
-    }
+// function popUp(id, color, iconClass, text, fontSize, closeBtn, body, bodyFontSize, retryBtn){
+//     var toReturn = `
+//         <div class="${id} popup" id="${id}">
+//             <div class="popupContainer" id="popupContainer" style="background: ${color};">
+//                 <div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>
+//                 <div class="popupIcon" id="popupIcon">
+//                     <i class="${iconClass}"></i>
+//                 </div>
+//                 <div class="popupTextContainer" id="popupTextContainer">
+//                     <p class="popupText" id="popupText" style="font-size: ${fontSize};">${text}</p>
+//                     <p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
+//                 </div>
+//             </div>
+//         </div>
+//     `
+//     closeBtnCode = `<div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>`
+//     bodyCode = `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>`
+//     if(closeBtn == false){
+//         toReturn = toReturn.replace(closeBtnCode, '');
+//     }
+//     if(retryBtn === true){
+//         toReturn = toReturn.replace(`<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
+//                 </div>`, `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
+//                 </div>
+//         <div class="retryBtnContainer" id="retryBtnContainer">
+//             <div class="retryBtn" id="retryBtn" onclick="copiar()">
+//                 <p class="retryBtnText" id="retryBtnText">Reintentar</p>
+//             </div>
+//         </div>
+//         `)
+//     }
+//     if(body == undefined){
+//         toReturn = toReturn.replace(bodyCode, '')
+//     }
 
-    return toReturn
-}
+//     return toReturn
+// }
 
 function del(id){
     if(id.indexOf('inputs') > -1 && inputsGroups.length <= 1) return
@@ -217,6 +218,7 @@ function del(id){
     var padre = element.parentNode;
     padre.removeChild(element);
 
+    // Corrige la enumeración de los grupos de inputs despues de la eliminación de uno de ellos
     if(id.indexOf('inputs') > -1){
         var amount = inputsGroups.length;
         for(var i = 0; i < amount; i++){
@@ -237,17 +239,6 @@ function del(id){
             document.querySelector('#' + inputsGroups[i].id + ' > div.delInputs').className = 'delInputs ' + i;
             document.querySelector('#' + inputsGroups[i].id + ' > div.delInputs').setAttribute('onclick', 'del(\'inputs' + i + '\')');
         }
-    }
-
-    if(id == 'okPopup'){
-        let amount = inputsGroups.length;
-        for(i = amount; i > 1; i--){
-            app.removeChild(inputsGroups[i-1]) 
-        } //Elimina los inputs groups hasta que queda uno solo
-        bookInput[0].value = '';
-        chapterInput[0].value = '';
-        verseInput[0].value = '';
-        versionInput[0].value = 'RVR60';
     }
 }
 
@@ -296,13 +287,36 @@ function getAvailableChapters(actualInputsGroup){
 function getAvailableVerses(actualInputsGroup){
     let actualInputsGroupNumber = actualInputsGroup.classList[1]
     let actualBook = bookInput[actualInputsGroupNumber].value
+    let actualChapter = Number(chapterInput[actualInputsGroupNumber].value)
+    let actualVersion = versionInput[actualInputsGroupNumber].value
     let isABook = isItABook('es', actualBook)
-    console.log(isABook);
-    if(isABook === false) {
-        // review
-        return
+    if(isABook === false) return
+
+    toCheckVerse = 1;
+    checkNextVerse(actualVersion, actualBook, actualChapter, toCheckVerse, actualInputsGroupNumber);
+}
+
+function checkNextVerse(version, book, chapter, verse, inputsGroupNumber){
+    console.log(toCheckVerse)
+    let url = `https://api.biblia.com/v1/bible/content/${version}.txt.json?passage=${book}${chapter}.${verse}&key=${key}`
+    fetch(url)
+        .then(res => {
+            if(res.status === 200){
+                toCheckVerse++;
+                checkNextVerse(version, book, chapter, toCheckVerse, inputsGroupNumber)
+            } else if(res.status === 404){
+                toCheckVerse--;
+                updateVersesDatalist(inputsGroupNumber, toCheckVerse)
+            }
+        })
+}
+
+function updateVersesDatalist(inputsGroupNumber, verses){
+    let datalist = document.querySelector('#versesDatalist' + inputsGroupNumber)
+    datalist.innerHTML = '';
+    for(let i = 1; i <= verses; i++){
+        datalist.insertAdjacentHTML('beforeend', `<option>${i}</option>`)
     }
-    console.log(actualInputsGroup)
 }
 
 function updateChaptersDatalist(inputGroupsNumber, chapters){
