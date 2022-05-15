@@ -1,0 +1,71 @@
+@media screen and (max-width: 600px) {
+    .inputs{
+        flex-direction: column;
+        border: none;
+        box-sizing: border-box;
+        width: 90%; min-width: 220px; max-width: 340px;
+        background: #0002;
+        padding: 20px; padding-top: 30px;
+        margin: 0; margin-bottom: 30px;
+
+        --input-height: 25px;
+    }
+
+    .inputs input[type="text"], .inputs select.versionInput{
+        box-sizing: content-box;
+        width: 100%; height: var(--input-height);
+        margin: 0; margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .inputs input[type="text"]::placeholder{
+        width: 100%;
+    }
+
+    .inputs > *:hover::placeholder{
+        color: #fff6;
+    }
+
+    /* para el boton de eliminar inputs */
+
+    .inputs .delInputs{
+        height: 1.3em; width: 1.3em;
+        opacity: 1;
+        position: absolute;
+        top: 10px; right: calc(10px + 14px);
+    }
+
+    .inputs .delInputs span.material-icons{
+        margin: 0;
+        font-size: 1.3em;
+        font-weight: bold;
+    }
+
+    /* Para los botones */
+
+    .btns{
+        width: 90%; max-width: 340px; min-width: 220px;
+    }
+
+    .btns .btn:hover{
+        background: none;
+    }
+
+    /* Tutorial */
+
+    .tutorial{
+        width: 90%; max-width: 340px; min-width: 220px;
+        margin: auto;
+        box-sizing: border-box;
+    }
+
+    .tutorial-step-body{
+        flex-direction: column;
+    }
+
+    .tutorial-step img{
+        width: 100%; max-height: unset;
+        margin: 5px 0;
+        
+    }
+}
