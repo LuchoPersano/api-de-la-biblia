@@ -1,0 +1,138 @@
+.btns{
+    width: 465px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.btns .btn{
+    width: 100%;
+    text-align: center;
+    border: 2px solid rgb(10, 141, 141);
+    padding: 6px 0;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.btns .okBtn{
+    width: 80%;
+    margin: 20px auto 0 auto;
+}
+
+.btns .tutorialBtn{
+    /* width: 100%; */
+    padding: 6px 0;
+    transition: .5s;
+    width: 80%;
+    margin: 5px auto 0 auto;
+}
+
+.btns .tutorialBtn.big{
+    margin-top: 30px;
+    background: rgb(141 10 10);
+    border-color: rgb(141 10 10);
+    margin-bottom: 0;
+}
+
+.btns .tutorialBtn.big:hover{
+    background: rgb(141 10 10);
+    border-color: rgb(141 10 10);
+}
+
+.btns .tutorialBtn::before{
+    content: "";
+    position: absolute;
+    width: calc((100vw - 380px) / 2 - 100vw * (5/100));
+    height: 100%;
+    right: calc(378px - ((100vw - 380px) / 2 - 100vw * (5/100)));
+    top: -2px;
+    z-index: -1;
+}
+
+.btns .tutorialBtn.big::before{
+    background: rgb(141 10 10); 
+    border: 2px solid rgb(141 10 10);
+    animation: a ease-in-out .5s;
+}
+
+.btns .tutorialBtn.big.finish::before{
+    right: 374px;
+}
+
+@keyframes a {
+    100%{
+        right: 374px;
+    }
+}
+
+.btns .tutorialBtn::after{
+    content: "";
+    position: absolute;
+    width: calc((100vw - 380px) / 2 - 100vw * (5/100));
+    height: 100%;
+    left: calc(378px - ((100vw - 380px) / 2 - 100vw * (5/100)));
+    top: -2px;
+    z-index: -1;
+}
+
+.btns .tutorialBtn.big::after{
+    background: rgb(141 10 10); 
+    border: 2px solid rgb(141 10 10);
+    animation: b ease-in-out .5s;
+}
+
+.btns .tutorialBtn.big.finish::after{
+    left: 374px;
+}
+
+@keyframes b {
+    100%{
+        left: 374px;
+    }
+}
+
+.btns .okBtn{
+    background: rgb(10, 141, 141);
+}
+
+.btns .btn:hover{
+    background: rgb(10, 141, 141);
+}
+
+.btns .btn:active{
+    background: rgb(9, 124, 124);
+}
+
+.btns .newBtn{
+    width: 100%;
+    text-align: start;
+    border: none;
+    border-left: 3px solid rgba(10, 141, 141, .6);
+    padding: 2px 8px;
+    margin-top: 5px;
+    font-weight: normal;
+    background: #0000000b;
+    transition: .2s;
+}
+.btns .newBtn:hover{
+    background: #00000019;
+}
+.btns .newBtn p span{
+    color: #fffa;
+    font-style: italic;
+}
+.btns .newBtn p span.material-icons{
+    font-size: 16px;
+    margin-top: 4px;
+    margin-bottom: -5px;
+}
+.btns .newBtn p span.text{
+    display: inline-block;
+    position: relative;
+    bottom: 3px;
+    left: 1px;
+    font-size: 14px;
+}
+
