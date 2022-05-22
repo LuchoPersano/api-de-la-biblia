@@ -1,60 +1,3 @@
-function newIn(){
-    console.log('Agregando nuevo grupo de inputs...')
-    let existing = inputsGroups.length;
-    let lastOne = inputsGroups[existing-1];
-    console.log('La cantidad de grupos existentes es ' + existing + ' y el último es este:');
-    console.log(lastOne);
-    console.log('con valor actual de ' + bookInput[existing-1].value + ' ' + chapterInput[existing-1].value + ':' + verseInput[existing-1].value + ' ' + versionInput[existing-1].value);
-    let html = `
-    <div class="inputs ${existing}" id="inputs${existing}">
-    <datalist id="chaptersDatalist${existing}"></datalist>
-    <datalist id="versesDatalist${existing}"></datalist>
-
-    <!-- BOTÓN PARA ELIMINAR GRUPO DE INPUTS -->
-    <div class="delInputs ${existing}" id="delInputs${existing}" onclick="del('inputs${existing}')">
-        <span class="material-icons">close</span>
-    </div>
-
-    <!-- INPUTS -->
-    <input name="book" type="text" placeholder="Libro" id="bookInput${existing}" class="bookInput ${existing}" list="booksDataList" onchange="getAvailableChapters('inputs${existing}')">
-    <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput${existing}" class="chapterInput ${existing}" list="chaptersDatalist${existing}">
-    <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput${existing}" class="verseInput ${existing}" list="versesDatalist${existing}">
-    <select name="version" class="versionInput ${existing}" id="versionInput${existing}">
-        <option value="RVR60">Reina Valera 1960</option>
-    </select>
-    </div>
-    `;
-    lastOne.insertAdjacentHTML('afterend', html);
-    console.log('Se agregó un nuevo grupo de inputs:');
-    console.log(inputsGroups[existing]);
-    console.log('');
-}
-
-function okIn(){
-    amount = inputsGroups.length;
-    insertPopup(popups.popupsArray.find(popup => popup.name == 'cargando').html);
-    doNextReq();
-    var intervalID = setInterval(() => {
-        if(solicitudesExitosas === amount){
-            setTimeout(() => {
-                for(i = 0; i < 66; i++){
-                    copy = copy.replaceAll(librosEN[i], librosES[i]); //Cambia la cita de inglés a Español
-                }
-                copiar();
-            }, 1000);
-            clearInterval(intervalID);
-        } else if(solicitudes === amount){
-            removeExistingPopups()
-            insertPopup(popups.popupsArray.find(popup => popup.name == 'error').html)
-            clearInterval(intervalID);
-            // Reinicia las variables para la próxima petición
-            solicitudes = 0;
-            solicitudesExitosas = 0;
-            copy = '';
-        }
-    }, 500);
-}
-
 function copiar(){
     navigator.clipboard.writeText(copy)
     .then(() => {
@@ -81,92 +24,10 @@ function copiar(){
 
 function changeBookToEnglish(ESBookString){
     let ENBookString = ESBookString
-    // librosES.forEach(element => {
-    //     ENBookString
-    // });
     for(let i = 0; i < librosES.length; i++){
         ENBookString = ENBookString.replaceAll(librosES[i], librosEN[i]);
     }
     return ENBookString
-}
-
-function getBibleInfo(version){
-    let url = 'bibles-info/' + version + '.json';
-    console.log('Cargando información de la biblia...')
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            console.log('Información de la biblia obtenida con éxito :D')
-            bibleInfo = data;
-        })
-        .catch(err => console.error(err))
-}
-
-function doNextReq(){
-    let bookv = changeBookToEnglish(bookInput[solicitudes].value);
-    let chapterv = chapterInput[solicitudes].value;
-    let versev = verseInput[solicitudes].value;
-    let versionv = versionInput[solicitudes].value;
-    let url = `https://api.biblia.com/v1/bible/content/${versionv}.txt.json?passage=${bookv}${chapterv}.${versev}&eachVerse=[VerseNum]+[VerseText]{{{tab}}}[FullVerseRef]{{{{salto}}}&paragraphs=false&key=${key}`;
-
-    if(versev === 'todos'){
-        getTheWholeChapter(bookv, chapterv, versionv)
-        return
-    } 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            var salto = 0;
-            var saltos = []
-            while(salto >= 0){
-                if(salto != 0){
-                    saltos.push(salto);
-                }
-                salto = data.text.indexOf('{{{salto}}}', salto + 1);
-            }
-            var textConSaltos = data.text.replaceAll('{{{{salto}}}', saltodelinea).replaceAll('{{{tab}}}', tab);
-            copy += textConSaltos + saltodelinea;
-            solicitudes++;
-            solicitudesExitosas++;
-            if(solicitudes < amount){
-                doNextReq();
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            solicitudes++;
-            if(solicitudes < amount){
-                doNextReq();
-            }
-        })
-}
-
-let hasFinished = false;
-let actualVerse = 1;
-
-function getTheWholeChapter(book, chapter, version){
-    getNextVerse()
-    function getNextVerse(){
-        let actualUrl = `https://api.biblia.com/v1/bible/content/${version}.txt.json?passage=${book}${chapter}.${actualVerse}&eachVerse=[VerseNum]+[VerseText]{{{tab}}}[FullVerseRef]{{{{salto}}}&paragraphs=false&key=${key}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                var salto = 0;
-                var saltos = []
-                while(salto >= 0){
-                    if(salto != 0){
-                        saltos.push(salto);
-                    }
-                    salto = data.text.indexOf('{{{salto}}}', salto + 1);
-                }
-                var textConSaltos = data.text.replaceAll('{{{{salto}}}', saltodelinea).replaceAll('{{{tab}}}', tab);
-                copy += textConSaltos;
-                
-            })
-    }
-    if(hasFinished){
-
-    }
 }
 
 function onload(elementId) {
@@ -258,21 +119,6 @@ function getAvailableVerses(actualInputsGroup){
     checkNextVerse(actualVersion, actualBook, actualChapter, toCheckVerse, actualInputsGroupNumber);
 }
 
-function checkNextVerse(version, book, chapter, verse, inputsGroupNumber){
-    console.log(toCheckVerse)
-    let url = `https://api.biblia.com/v1/bible/content/${version}.txt.json?passage=${book}${chapter}.${verse}&key=${key}`
-    fetch(url)
-        .then(res => {
-            if(res.status === 200){
-                toCheckVerse++;
-                checkNextVerse(version, book, chapter, toCheckVerse, inputsGroupNumber)
-            } else if(res.status === 404){
-                toCheckVerse--;
-                updateVersesDatalist(inputsGroupNumber, toCheckVerse)
-            }
-        })
-}
-
 function updateVersesDatalist(inputsGroupNumber, verses){
     let datalist = document.querySelector('#versesDatalist' + inputsGroupNumber)
     datalist.innerHTML = '';
@@ -295,52 +141,6 @@ function getBookNumber(bookString){
             return i
         }
     }
-}
-
-function openTutorial() {
-    // agregar spinner de carga
-    container.insertAdjacentHTML('beforeend', loadingSpinnerHTMLCode)
-    let loadingSpinner = document.querySelector('.container#container > .loading-spinner');
-
-    // Desabilitar el boton de tutorial
-    tutorialBtn.toggleAttribute('disabled');
-    
-    // realizar petición al servidor del tutorial
-    fetch('tutorial.html')
-        .then(response => {
-            return response.text()
-        })
-        .then(data => {
-            loadingSpinner.remove(); // eliminar spinner de carga
-            container.insertAdjacentHTML('beforeend', data); // agregar tutorial al documento
-            setTimeout(() => {
-                document.querySelector('.tutorial').style.opacity = '1';
-                tutorialBtn.removeEventListener('click', openTutorial);
-                tutorialBtn.addEventListener('click', closeTutorial);
-                tutorialBtn.toggleAttribute('disabled');
-                tutorialBtn.querySelector('p > i.fas').classList.remove('fa-question')
-                tutorialBtn.querySelector('p > i.fas').classList.add('fa-times')
-                tutorialBtn.classList.add('big');
-                setTimeout(() => {
-                    tutorialBtn.classList.add('finish');
-                }, 500)
-            }, 10);
-        })
-}
-
-function closeTutorial(){
-    setTimeout(() => {
-        document.querySelector('.tutorial').style.opacity = '0';
-        tutorialBtn.querySelector('p > i.fas').classList.remove('fa-times')
-        tutorialBtn.querySelector('p > i.fas').classList.add('fa-question')
-        tutorialBtn.classList.remove('big');
-        tutorialBtn.classList.remove('finish');
-        setTimeout(() => {
-            tutorialBtn.removeEventListener('click', closeTutorial);
-            tutorialBtn.addEventListener('click', openTutorial);
-            document.querySelector('.tutorial').remove();
-        }, 1000)
-    }, 10)
 }
 
 function getPopups(){
