@@ -173,44 +173,6 @@ function onload(elementId) {
     document.getElementById(elementId).style.opacity = '1';
 }
 
-// function popUp(id, color, iconClass, text, fontSize, closeBtn, body, bodyFontSize, retryBtn){
-//     var toReturn = `
-//         <div class="${id} popup" id="${id}">
-//             <div class="popupContainer" id="popupContainer" style="background: ${color};">
-//                 <div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>
-//                 <div class="popupIcon" id="popupIcon">
-//                     <i class="${iconClass}"></i>
-//                 </div>
-//                 <div class="popupTextContainer" id="popupTextContainer">
-//                     <p class="popupText" id="popupText" style="font-size: ${fontSize};">${text}</p>
-//                     <p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
-//                 </div>
-//             </div>
-//         </div>
-//     `
-//     closeBtnCode = `<div class="closePopupBtn" onclick="del('${id}')"><i class="fas fa-times"></i></div>`
-//     bodyCode = `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>`
-//     if(closeBtn == false){
-//         toReturn = toReturn.replace(closeBtnCode, '');
-//     }
-//     if(retryBtn === true){
-//         toReturn = toReturn.replace(`<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
-//                 </div>`, `<p class="popupBody" id="popupBody" style="font-size: ${ bodyFontSize };">${ body }</p>
-//                 </div>
-//         <div class="retryBtnContainer" id="retryBtnContainer">
-//             <div class="retryBtn" id="retryBtn" onclick="copiar()">
-//                 <p class="retryBtnText" id="retryBtnText">Reintentar</p>
-//             </div>
-//         </div>
-//         `)
-//     }
-//     if(body == undefined){
-//         toReturn = toReturn.replace(bodyCode, '')
-//     }
-
-//     return toReturn
-// }
-
 function del(id){
     if(id.indexOf('inputs') > -1 && inputsGroups.length <= 1) return
 
@@ -339,6 +301,9 @@ function openTutorial() {
     // agregar spinner de carga
     container.insertAdjacentHTML('beforeend', loadingSpinnerHTMLCode)
     let loadingSpinner = document.querySelector('.container#container > .loading-spinner');
+
+    // Desabilitar el boton de tutorial
+    tutorialBtn.toggleAttribute('disabled');
     
     // realizar petición al servidor del tutorial
     fetch('tutorial.html')
@@ -346,19 +311,36 @@ function openTutorial() {
             return response.text()
         })
         .then(data => {
-            // eliminar spinner de carga
-            loadingSpinner.remove()
-            
-            // agregar tutorial al documento
-            container.insertAdjacentHTML('beforeend', data)
+            loadingSpinner.remove(); // eliminar spinner de carga
+            container.insertAdjacentHTML('beforeend', data); // agregar tutorial al documento
             setTimeout(() => {
                 document.querySelector('.tutorial').style.opacity = '1';
+                tutorialBtn.removeEventListener('click', openTutorial);
+                tutorialBtn.addEventListener('click', closeTutorial);
+                tutorialBtn.toggleAttribute('disabled');
+                tutorialBtn.querySelector('p > i.fas').classList.remove('fa-question')
+                tutorialBtn.querySelector('p > i.fas').classList.add('fa-times')
+                tutorialBtn.classList.add('big');
+                setTimeout(() => {
+                    tutorialBtn.classList.add('finish');
+                }, 500)
             }, 10);
-
-            // desabilitar el botón de tutorial
-            tutorialBtn.removeAttribute('onclick')
-            tutorialBtn.setAttribute('disabled', '')
         })
+}
+
+function closeTutorial(){
+    setTimeout(() => {
+        document.querySelector('.tutorial').style.opacity = '0';
+        tutorialBtn.querySelector('p > i.fas').classList.remove('fa-times')
+        tutorialBtn.querySelector('p > i.fas').classList.add('fa-question')
+        tutorialBtn.classList.remove('big');
+        tutorialBtn.classList.remove('finish');
+        setTimeout(() => {
+            tutorialBtn.removeEventListener('click', closeTutorial);
+            tutorialBtn.addEventListener('click', openTutorial);
+            document.querySelector('.tutorial').remove();
+        }, 1000)
+    }, 10)
 }
 
 function getPopups(){
@@ -382,6 +364,10 @@ function retry(func, time){
 function bootActions(){
     getBibleInfo('RVR60');
     getPopups();
+    tutorialBtn.addEventListener('click', openTutorial)
+    document.querySelectorAll('.inputs > input').forEach(input => {
+        input.addEventListener('keydown', handleKeyDown)
+    })
 }
 
 function toHTML(stringElement){
@@ -401,4 +387,16 @@ function removeExistingPopups(){
 
 function insertPopup(popup){
     app.insertAdjacentHTML('afterbegin', popup)
+}
+
+function handleKeyDown(){
+    console.log(event);
+    if(event.key != 'Enter') return
+    if(event.ctrlKey){
+        newBtn.click()
+        inputsGroups[inputsGroups.length - 1].querySelector('.bookInput').focus()
+        inputsGroups[inputsGroups.length - 1].querySelectorAll('input').forEach(input => { input.addEventListener('keydown', handleKeyDown) })
+    } else if(!event.altKey && !event.shiftKey){
+        okBtn.click()
+    }
 }

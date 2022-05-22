@@ -21,7 +21,7 @@ div.btn[disabled]:hover{
 }
 
 .app{
-    padding: 90px 0 10px 0;
+    padding: 90px 0 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -144,6 +144,71 @@ input:hover::placeholder {
 .btns .tutorialBtn{
     width: 100%;
     padding: 6px 0;
+    transition: .5s;
+}
+
+.btns .tutorialBtn.big{
+    margin-top: 30px;
+    background: rgb(141 10 10);
+    border-color: rgb(141 10 10);
+    margin-bottom: 0;
+}
+
+.btns .tutorialBtn.big:hover{
+    background: rgb(141 10 10);
+    border-color: rgb(141 10 10);
+}
+
+.btns .tutorialBtn::before{
+    content: "";
+    position: absolute;
+    width: calc((100vw - 380px) / 2 - 100vw * (5/100));
+    height: 100%;
+    right: calc(378px - ((100vw - 380px) / 2 - 100vw * (5/100)));
+    top: -2px;
+    z-index: -1;
+}
+
+.btns .tutorialBtn.big::before{
+    background: rgb(141 10 10); 
+    border: 2px solid rgb(141 10 10);
+    animation: a ease-in-out .5s;
+}
+
+.btns .tutorialBtn.big.finish::before{
+    right: 374px;
+}
+
+@keyframes a {
+    100%{
+        right: 374px;
+    }
+}
+
+.btns .tutorialBtn::after{
+    content: "";
+    position: absolute;
+    width: calc((100vw - 380px) / 2 - 100vw * (5/100));
+    height: 100%;
+    left: calc(378px - ((100vw - 380px) / 2 - 100vw * (5/100)));
+    top: -2px;
+    z-index: -1;
+}
+
+.btns .tutorialBtn.big::after{
+    background: rgb(141 10 10); 
+    border: 2px solid rgb(141 10 10);
+    animation: b ease-in-out .5s;
+}
+
+.btns .tutorialBtn.big.finish::after{
+    left: 374px;
+}
+
+@keyframes b {
+    100%{
+        left: 374px;
+    }
 }
 
 .btns .okBtn{
