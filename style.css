@@ -1,9 +1,18 @@
+:root{
+    --light-green: rgb(10, 141, 141);
+    --light-green-x: rgb(9, 124, 124);
+    --dark-green: rgb(7, 75, 75);
+    --dar-red: rgb(141 10 10);
+    --light-gray: rgb(78, 119, 119);
+    --transparent-green: rgba(10, 141, 141, 0.26);
+}
+
 body{
     opacity: 0;
     transition: .3s;
     width: 100%;
     min-height: 100vh;
-    background: rgb(7, 75, 75);
+    background: var(--dark-green);
 }
 *:not(ul, ol){
     font-family: sans-serif;
@@ -76,11 +85,11 @@ div.btn[disabled]:hover{
     margin: 0 5px;
     background: none;
     border: none;
-    border-radius: 0;
+    border-radius: 12px;
     font-size: 14px;
-    padding: 5px 8px 5px 3px;
+    padding: 10px;
     color: white;
-    border-bottom: 2px solid white;
+    border: 2px solid rgb(10, 141, 141);
 }
 
 .inputs .chapterInput, .inputs .verseInput{
@@ -88,11 +97,8 @@ div.btn[disabled]:hover{
 }
 
 input::placeholder {
-    color: #fff6;
+    color: var(--light-gray);
     transition: .2s;
-}
-input:hover::placeholder {
-    color: #ffff;
 }
 
 .inputs .chapterInput::placeholder{
@@ -104,9 +110,7 @@ input:hover::placeholder {
 }
 
 .inputs input:focus, .inputs select:focus, .inputs input:focus-visible, .inputs select:focus-visible{
-    border-radius: 0;
     outline: none;
-    background: #0002;
 }
 
 
@@ -117,21 +121,21 @@ input:hover::placeholder {
 
 .btns{
     display: flex;
-    margin-top: 10px;
+    margin-top: 16px;
     width: 380px;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .btns > *{
-    margin-bottom: 7px;
+    margin-bottom: 12px;
 }
 
 .btns .btn{
     width: 48%;
     text-align: center;
-    border: 2px solid rgb(10, 141, 141);
-    padding: 6px 0;
+    /* border: 2px solid var(--light-green); */
+    padding: 10px 0;
     font-size: 15px;
     font-weight: bold;
     color: white;
@@ -139,24 +143,33 @@ input:hover::placeholder {
     position: relative;
     white-space: nowrap;
     box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.btns .okBtn{
+    background: var(--light-green);
+}
+
+.btns .newBtn{
+    background-color: var(--transparent-green);
 }
 
 .btns .tutorialBtn{
     width: 100%;
-    padding: 6px 0;
     transition: .5s;
+    background: var(--transparent-green);
 }
 
 .btns .tutorialBtn.big{
     margin-top: 30px;
-    background: rgb(141 10 10);
-    border-color: rgb(141 10 10);
+    background: var(--dark-red);
+    border-color: var(--dark-red);
     margin-bottom: 0;
 }
 
 .btns .tutorialBtn.big:hover{
-    background: rgb(141 10 10);
-    border-color: rgb(141 10 10);
+    background: var(--dark-red);
+    border-color: var(--dark-red);
 }
 
 .btns .tutorialBtn::before{
@@ -170,8 +183,8 @@ input:hover::placeholder {
 }
 
 .btns .tutorialBtn.big::before{
-    background: rgb(141 10 10); 
-    border: 2px solid rgb(141 10 10);
+    background: var(--dark-red); 
+    border: 2px solid var(--dark-red);
     animation: a ease-in-out .5s;
 }
 
@@ -196,8 +209,8 @@ input:hover::placeholder {
 }
 
 .btns .tutorialBtn.big::after{
-    background: rgb(141 10 10); 
-    border: 2px solid rgb(141 10 10);
+    background: var(--dark-red); 
+    border: 2px solid var(--dark-red);
     animation: b ease-in-out .5s;
 }
 
@@ -211,18 +224,6 @@ input:hover::placeholder {
     }
 }
 
-.btns .okBtn{
-    background: rgb(10, 141, 141);
-}
-
-.btns .btn:hover{
-    background: rgb(10, 141, 141);
-}
-
-.btns .btn:active{
-    background: rgb(9, 124, 124);
-}
-
 
 /* ---------------- */
 /* PARA EL TUTORIAL */
@@ -231,7 +232,7 @@ input:hover::placeholder {
 .tutorial{
     /* margin: 0 calc(50vw - (475px / 2)); */
     margin: 0 5%;
-    border: 2px solid rgb(10, 141, 141);
+    border: 2px solid var(--light-green);
     border-bottom: none;
     padding: 13px 10px;
     opacity: 0;
@@ -279,7 +280,7 @@ input:hover::placeholder {
     width: 30px; height: 30px;
     border-radius: 50%;
     border: 5px solid rgb(8, 99, 99);
-    border-top: 5px solid rgb(10, 141, 141);
+    border-top: 5px solid var(--light-green);
     animation: spin 1s linear infinite;
 }
 
