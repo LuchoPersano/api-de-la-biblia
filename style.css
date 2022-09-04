@@ -1,6 +1,7 @@
 :root{
     --light-green: rgb(10, 141, 141);
     --light-green-x: rgb(9, 124, 124);
+    --light-green-xx: rgb(16, 129, 129);
     --dark-green: rgb(7, 75, 75);
     --dark-red: rgb(84, 37, 37);
     --light-gray: rgb(78, 119, 119);
@@ -43,7 +44,8 @@ div.btn[disabled]:hover{
     display: flex;
     align-items: center;
     position: relative;
-    padding-left: 32px;
+    /* padding-left: 32px; */
+    padding: 2px 0;
     /* border-left: 32px solid transparent;
     border-top: 8px solid transparent;
     border-right: 4px solid transparent;
@@ -51,11 +53,13 @@ div.btn[disabled]:hover{
     /* border: 2px solid var(--light-green); */
     margin: -3px 0 10px -32px;
     border-radius: 12px;
+    right: 0;
+    background: none;
 }
 
 .inputs .delInputs {
     position: relative;
-    height: 30px;
+    height: 35px;
     width: 16px;
     margin-right: -16px;
     right: 20px;
@@ -76,7 +80,9 @@ div.btn[disabled]:hover{
 }
 
 .inputs:hover{
-    background: #0002;
+    background: var(--light-green);
+    padding-left: 32px;
+    right: 16px;
 }
 
 
@@ -121,7 +127,13 @@ input::placeholder {
     outline: none;
 }
 
+.inputs:hover input, .inputs:hover select{
+    background: var(--light-green-xx);
+}
 
+.inputs:hover input::placeholder, .inputs:hover select::placeholder{
+    color: var(--white);
+}
 
 /* -------------------- */
 /* ESTILOS PARA BOTONES */
