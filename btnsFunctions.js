@@ -6,23 +6,26 @@ function newIn(){
     console.log(lastOne);
     console.log('con valor actual de ' + bookInput[existing-1].value + ' ' + chapterInput[existing-1].value + ':' + verseInput[existing-1].value + ' ' + versionInput[existing-1].value);
     let html = `
-    <div class="inputs ${existing}" id="inputs${existing}">
-    <datalist id="chaptersDatalist${existing}"></datalist>
-    <datalist id="versesDatalist${existing}"></datalist>
+        <div class="inputs ${existing}" id="inputs${existing}">
+        <datalist id="chaptersDatalist${existing}"></datalist>
+        <datalist id="versesDatalist${existing}"></datalist>
 
-    <!-- BOTÓN PARA ELIMINAR GRUPO DE INPUTS -->
-    <div class="delInputs ${existing}" id="delInputs${existing}" onclick="del('inputs${existing}')">
-        <span class="material-icons">close</span>
-    </div>
+        <!-- BOTÓN PARA ELIMINAR GRUPO DE INPUTS -->
+        <div class="delInputs ${existing}" id="delInputs${existing}" onclick="del('inputs${existing}')">
+            <span class="material-icons">close</span>
+        </div>
 
-    <!-- INPUTS -->
-    <input name="book" type="text" placeholder="Libro" id="bookInput${existing}" class="bookInput ${existing}" list="booksDataList" onchange="getAvailableChapters('inputs${existing}')">
-    <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput${existing}" class="chapterInput ${existing}" list="chaptersDatalist${existing}">
-    <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput${existing}" class="verseInput ${existing}" list="versesDatalist${existing}">
-    <select name="version" class="versionInput ${existing}" id="versionInput${existing}">
-        <option value="RVR60">Reina Valera 1960</option>
-    </select>
-    </div>
+        <!-- INPUTS -->
+        <div class="inputs-container">
+            <input name="book" type="text" placeholder="Libro" id="bookInput${existing}" class="bookInput ${existing}" list="booksDataList" autocomplete="off" onchange="getAvailableChapters('inputs${existing}')">
+            <div class="renglon2">
+                <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput${existing}" class="chapterInput ${existing}" list="chaptersDatalist${existing}" autocomplete="off" onchange="getAvailableVerses(this)">
+                <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput${existing}" class="verseInput ${existing}" list="versesDatalist${existing}" autocomplete="off">
+                <select name="version" class="versionInput ${existing}" id="versionInput${existing}">
+                    <option value="RVR60">Reina Valera 1960</option>
+                </select>
+            </div>
+        </div>
     `;
     lastOne.insertAdjacentHTML('afterend', html);
     console.log('Se agregó un nuevo grupo de inputs:');

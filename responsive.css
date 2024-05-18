@@ -1,14 +1,36 @@
 @media screen and (max-width: 600px) {
+    .app {
+        background: none;
+    }
+    
     .inputs{
+        display: flex;
         flex-direction: column;
         border: none;
-        box-sizing: border-box;
+        /* box-sizing: border-box; */
         width: 90%; min-width: 220px; max-width: 340px;
-        background: #0002;
+        /* background: #0002; */
         padding: 20px; padding-top: 30px;
         margin: 0; margin-bottom: 30px;
 
         --input-height: 25px;
+    }
+
+    .inputs .inputs-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .inputs input.bookInput{
+        /* box-sizing: content-box; */
+        width: 10%;
+    }
+
+    .inputs .renglon2 {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
     }
 
     .inputs input[type="text"], .inputs select.versionInput{
@@ -26,6 +48,15 @@
         color: #fff6;
     }
 
+    /*  */
+
+    .inputs:hover{
+        padding: 20px; padding-top: 30px;
+        right: 0;
+        background: #0002;
+    }
+
+
     /* para el boton de eliminar inputs */
 
     .inputs .delInputs{
@@ -33,6 +64,7 @@
         opacity: 1;
         position: absolute;
         top: 10px; right: calc(10px + 14px);
+        display: none;
     }
 
     .inputs .delInputs span.material-icons{

@@ -1,7 +1,13 @@
+:root{
+    --verde: linear-gradient(141deg, rgba(32,105,32,1) 0%, rgba(58,189,58,1) 100%);
+    --fondo: rgba(0, 0, 0, 0.363);
+    --letras: rgb(226,226,226);
+}
+
 .popup{
     position: absolute;
     z-index: 500;
-    color: white;
+    color: var(--letras);
 }
 
 .popup::before{
@@ -11,14 +17,14 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.363);
+    background: var(--fondo);
 }
 
 .popupContainer{
     position: fixed;
     width: 130px;
     min-height: 130px;
-    background: rgb(81, 214, 81);
+    background: var(--verde);
     border-radius: 10px;
     top: 50%;
     left: 50%;
@@ -33,7 +39,7 @@
     position: fixed;
     width: 130px;
     height: 130px;
-    background: rgb(97, 97, 97);
+    background: rgb(48, 48, 48);
     border-radius: 10px;
     top: 50%;
     left: 50%;
@@ -64,8 +70,8 @@
 .popup-loading-spinner{
     width: 30px; height: 30px;
     border-radius: 50%;
-    border: 6px solid rgb(134, 134, 134);
-    border-top: 6px solid rgb(255, 255, 255);
+    border: 6px solid rgb(68, 68, 68);
+    border-top: 6px solid var(--letras);
     animation: spin 1.4s linear infinite;
 }
 
@@ -88,13 +94,13 @@
     padding: 5px 14px;
     border-radius: 7px;
     margin: 6px 0;
-    border: 1px solid white;
+    border: 1px solid var(--letras);
     transition: .3s;
     cursor: pointer;
 }
 
 .retryBtnContainer:hover{
-    background: #fff;
+    background: var(--letras);
 }
 
 .retryBtnContainer:hover .retryBtn p{
@@ -113,7 +119,7 @@
 }
 
 .spinner .path {
-    stroke: rgb(255, 255, 255);
+    stroke: var(--letras);
     animation: dash 1.5s ease-in-out infinite;
 }
   

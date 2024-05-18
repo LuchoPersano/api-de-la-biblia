@@ -11,14 +11,18 @@
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
     <link rel="stylesheet" href="icons/google/google.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="responsive.css">
+    <!-- <link rel="stylesheet" href="responsive.css"> -->
     <link rel="stylesheet" href="popups/popups.css">
     <script src="https://kit.fontawesome.com/2e16f541ef.js" crossorigin="anonymous"></script>
 <!--     <script src="icons/fontawesome/2e16f541ef.js" crossorigin="anonymous"></script> -->
 </head>
 <body id="body" onload="onload('body')">
     <div class="container" id="container">
+        <div class="disclaimer">
+            <p>Atención: estás en la versión 1.1 de BUSCAR VERSICULOS EL FARO. Si tenés problemas con alguna funcionalidad podés acceder a la versión anterior en <a href="https://buscarversiculosviejo.netlify.app/">https://buscarversiculosviejo.netlify.app/</a></p>
+        </div>
         <div class="app" id="app">
+            <img src="/img/logo_mono.png" alt="" class="logo">
             <datalist id="booksDataList">
                 <option>Génesis</option>
                 <option>Éxodo</option>
@@ -97,12 +101,19 @@
                 </div>
 
                 <!-- INPUTS -->
-                <input name="book" type="text" placeholder="Libro" id="bookInput0" class="bookInput 0" list="booksDataList" autocomplete="off" onchange="getAvailableChapters('inputs0')">
-                <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput0" class="chapterInput 0" list="chaptersDatalist0" autocomplete="off" onchange="getAvailableVerses(this)">
-                <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput0" class="verseInput 0" list="versesDatalist0" autocomplete="off">
-                <select name="version" class="versionInput 0" id="versionInput0">
-                    <option value="RVR60">Reina Valera 1960</option>
-                </select>
+                <div class="inputs-container">
+                    <input name="book" type="text" placeholder="Libro" id="bookInput0" class="bookInput 0" list="booksDataList" autocomplete="off" onchange="getAvailableChapters('inputs0')">
+                    <div class="renglon2">
+                        <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput0" class="chapterInput 0" list="chaptersDatalist0" autocomplete="off" onchange="getAvailableVerses(this)">
+                        <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput0" class="verseInput 0" list="versesDatalist0" autocomplete="off">
+                        <select name="version" class="versionInput 0" id="versionInput0">
+                            <option value="RVR60">Reina Valera 1960</option>
+                        </select>
+                    </div>
+                </div>
+                
+                
+                
             </div>
             <div class="btns" id="btns">
                 <div class="newBtn btn" id="newBtn" onclick="newIn()">

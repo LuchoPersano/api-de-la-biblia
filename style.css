@@ -1,12 +1,16 @@
 :root{
-    --light-green: rgb(10, 141, 141);
+    --light-green: rgb(26, 78, 78);
     --light-green-x: rgb(9, 124, 124);
     --light-green-xx: rgb(16, 129, 129);
-    --dark-green: rgb(7, 75, 75);
+    --dark-green: #0d1c1c;
+    --fondo-tutorial: #060c0c;
     --dark-red: rgb(84, 37, 37);
-    --light-gray: rgb(78, 119, 119);
-    --transparent-green: rgba(10, 141, 141, 0.26);
-    --white: #fff;
+    --red: linear-gradient(115deg, rgba(119,8,8,1) 0%, rgba(93,7,7,1) 100%);
+    --light-gray: rgba(0, 0, 0, 0.382);
+    --transparent-green: rgba(46, 90, 103, 0.26);
+    --transparent-white: rgba(255, 255, 255, 0.036);
+    --white: rgb(226, 226, 226);
+    --black: rgb(0,0,0);
 }
 
 body{
@@ -31,38 +35,77 @@ div.btn[disabled]:hover{
     background: none;
 }
 
+.disclaimer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 80%;
+    background: var(--red);
+    padding: 1.3em 10%;
+}
+
 .app{
-    padding: 90px 0 0 0;
+    margin: 90px auto 0 auto;
+    background: rgb(16,16,16);
+    background: linear-gradient(115deg, rgba(16,16,16,1) 0%, rgb(0, 0, 0) 100%);
+    padding: 1em 5em 3em 5em;
+    border-radius: 3.7em;
+    width: 380px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* box-shadow: rgba(128, 128, 128, 0.295) 1px 1px 25px; */
+}
+
+.app img.logo {
+    width: 85px;
+    margin: 1em 0;
 }
 
 .inputs{
     border: 0 solid transparent;
     transition: .2s;
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
     position: relative;
     /* padding-left: 32px; */
-    padding: 2px 0;
+    padding: 10px 20px;
     /* border-left: 32px solid transparent;
     border-top: 8px solid transparent;
     border-right: 4px solid transparent;
     border-bottom: 8px solid transparent; */
     /* border: 2px solid var(--light-green); */
-    margin: -3px 0 10px -32px;
-    border-radius: 12px;
+    /* margin: -3px 0 10px -32px; */
+    margin: 0;
+    border-radius: 18px;
     right: 0;
     background: none;
+    width: 100%;
+}
+
+.inputs .inputs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+.inputs .renglon2 {
+    display: flex;
 }
 
 .inputs .delInputs {
-    position: relative;
-    height: 35px;
-    width: 16px;
-    margin-right: -16px;
-    right: 20px;
+    position: absolute;
+    /* height: 35px; */
+    padding: 40px 6px 46px 6px;
+    background: var(--red);
+    border-radius: inherit;
+    width: 40px;
+    margin-right: -15px;
+    /* right: 55px; */
+    left: 12px;
+    top: 13px;
     cursor: pointer;
     opacity: 0;
     transition: .2s;
@@ -70,8 +113,10 @@ div.btn[disabled]:hover{
 
 .inputs .delInputs .material-icons {
     padding: 0;
+    padding-left: 10px;
     margin: 0;
-    font-size: 16px;
+    font-weight: bolder;
+    font-size: 19px;
     margin-top: 9px;
 }
 
@@ -80,9 +125,9 @@ div.btn[disabled]:hover{
 }
 
 .inputs:hover{
-    background: var(--light-green);
-    padding-left: 32px;
-    right: 16px;
+    background: var(--transparent-white);
+    padding-left: 70px;
+    right: 25px;
 }
 
 
@@ -92,22 +137,27 @@ div.btn[disabled]:hover{
 /* --------------------------------- */
 
 .inputs input, .inputs select{
-    margin: 0 4px;
-    background: none;
+    margin: 1% 2px;
+    width: 89%;
+    height: 30px;
+    background: var(--white);
     border: none;
-    border-radius: 12px;
-    font-size: 14px;
-    padding: 10px;
-    color: white;
-    border: 2px solid rgb(10, 141, 141);
+    border-radius: 18px;
+    font-size: 16px;
+    padding: 3% 5%;
+    color: var(--black);
+    border: 1px solid rgb(84, 84, 84);
 }
 
 .inputs select{
     padding: 9px;
+    color: var(--light-gray);
+    width: 65%;
+    height: auto;
 }
 
 .inputs .chapterInput, .inputs .verseInput{
-    width: 3em; 
+    width: 20%; 
 }
 
 input::placeholder {
@@ -116,24 +166,24 @@ input::placeholder {
 }
 
 .inputs .chapterInput::placeholder{
-    width: 26px;
+    width: 30px;
 }
 
 .inputs .verseInput::placeholder{
-    width: 28px;
+    width: 32px;
 }
 
 .inputs input:focus, .inputs select:focus, .inputs input:focus-visible, .inputs select:focus-visible{
     outline: none;
 }
 
-.inputs:hover input, .inputs:hover select{
+/* .inputs:hover input, .inputs:hover select{
     background: var(--light-green-xx);
-}
+} */
 
-.inputs:hover input::placeholder, .inputs:hover select::placeholder{
+/* .inputs:hover input::placeholder, .inputs:hover select::placeholder{
     color: var(--white);
-}
+} */
 
 /* -------------------- */
 /* ESTILOS PARA BOTONES */
@@ -141,7 +191,7 @@ input::placeholder {
 
 .btns{
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
     width: 380px;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -155,7 +205,7 @@ input::placeholder {
     width: 48%;
     text-align: center;
     /* border: 2px solid var(--light-green); */
-    padding: 10px 0;
+    padding: 13px 0;
     font-size: 15px;
     font-weight: bold;
     color: white;
@@ -176,6 +226,7 @@ input::placeholder {
 
 .btns .tutorialBtn{
     width: 100%;
+    padding: 0px inherit;
     transition: .5s;
     background: var(--transparent-green);
 }
@@ -199,7 +250,7 @@ input::placeholder {
     height: 100%;
     right: calc(378px - ((100vw - 380px) / 2 - 100vw * (5/100)));
     top: 0;
-    z-index: -1;
+    z-index: 1;
     border-top-left-radius: 12px;
 }
 
@@ -211,6 +262,7 @@ input::placeholder {
 
 .btns .tutorialBtn.big.finish::before{
     right: 374px;
+    z-index: inherit;
 }
 
 @keyframes a {
@@ -226,7 +278,7 @@ input::placeholder {
     height: 100%;
     left: calc(378px - ((100vw - 380px) / 2 - 100vw * (5/100)));
     top: 0;
-    z-index: -1;
+    z-index: 1;
     border-top-right-radius: 12px;
 }
 
@@ -253,10 +305,11 @@ input::placeholder {
 
 .tutorial{
     /* margin: 0 calc(50vw - (475px / 2)); */
-    margin: 0 5%;
-    border: 2px solid var(--light-green);
+    margin: -48px 5%;
+    background: var(--fondo-tutorial);
+    /* border: 2px solid var(--light-green); */
     border-bottom: none;
-    padding: 13px 10px;
+    padding: 40px 30px;
     opacity: 0;
     transition: .5s;
 }
