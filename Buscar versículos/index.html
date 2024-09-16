@@ -1,0 +1,123 @@
+<!-- Codeado desde cero por Lucio Persano :D -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copiar versículos - Iglesia El FARO El Bolsón</title>
+    
+    <link rel="shortcut icon" href="img/icono.png" type="image/x-icon">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+    <link rel="stylesheet" href="icons/google/google.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="popups/popups.css">
+    <!-- <script src="https://kit.fontawesome.com/2e16f541ef.js" crossorigin="anonymous"></script> -->
+    <script src="icons/fontawesome/2e16f541ef.js" crossorigin="anonymous"></script>
+</head>
+<body id="body" onload="onload('body')">
+    <div class="container" id="container">
+        <div class="app" id="app">
+            <datalist id="booksDataList">
+                <option>Génesis</option>
+                <option>Éxodo</option>
+                <option>Levíticos</option>
+                <option>Números</option>
+                <option>Deuteronomio</option>
+                <option>Josué</option>
+                <option>Jueces</option>
+                <option>Rut</option>
+                <option>1 Samuel</option>
+                <option>2 Samuel</option>
+                <option>1 Reyes</option>
+                <option>2 Reyes</option>
+                <option>1 Crónicas</option>
+                <option>2 Crónicas</option>
+                <option>Esdras</option>
+                <option>Nehemías</option>
+                <option>Ester</option>
+                <option>Job</option>
+                <option>Salmos</option>
+                <option>Proverbios</option>
+                <option>Eclesiastés</option>
+                <option>Cantares</option>
+                <option>Isaías</option>
+                <option>Jeremías</option>
+                <option>Lamentaciones</option>
+                <option>Ezequiel</option>
+                <option>Daniel</option>
+                <option>Oseas</option>
+                <option>Joel</option>
+                <option>Amós</option>
+                <option>Abdías</option>
+                <option>Jonás</option>
+                <option>Miqueas</option>
+                <option>Nahum</option>
+                <option>Habacuc</option>
+                <option>Sofonías</option>
+                <option">Hageo</option>
+                <option>Zacarías</option>
+                <option>Malaquías</option>
+                <option>Mateo</option>
+                <option>Marcos</option>
+                <option>Lucas</option>
+                <option>Juan</option>
+                <option>Hechos</option>
+                <option>Romanos</option>
+                <option>1 Corintios</option>
+                <option>2 Corintios</option>
+                <option>Gálatas</option>
+                <option>Efesios</option>
+                <option>Filipenses</option>
+                <option>Colosenses</option>
+                <option>1 Tesalonicenses</option>
+                <option>2 Tesalonicenses</option>
+                <option>1 Timoteo</option>
+                <option>2 Timoteo</option>
+                <option>Tito</option>
+                <option>Filemón</option>
+                <option>Hebreos</option>
+                <option>Santiago</option>
+                <option>1 Pedro</option>
+                <option>2 Pedro</option>
+                <option>1 Juan</option>
+                <option>2 Juan</option>
+                <option>3 Juan</option>
+                <option>Judas</option>
+                <option>Apocalipsis</option>
+            </datalist>
+            <div class="inputs 0" id="inputs0">
+                <datalist id="chaptersDatalist0"></datalist>
+                <datalist id="versesDatalist0"></datalist>
+
+                <!-- BOTÓN PARA ELIMINAR GRUPO DE INPUTS -->
+                <div class="delInputs 0" id="delInputs0" onclick="del('inputs0')">
+                    <span class="material-icons">close</span>
+                </div>
+
+                <!-- INPUTS -->
+                <input name="book" type="text" placeholder="Libro" id="bookInput0" class="bookInput 0" list="booksDataList" autocomplete="off" onchange="getAvailableChapters('inputs0')">
+                <input name="Chapter" type="text" placeholder="Capítulo" id="chapterInput0" class="chapterInput 0" list="chaptersDatalist0" autocomplete="off" onchange="getAvailableVerses(this)">
+                <input name="Verse" type="text" placeholder="Versículo/s" id="verseInput0" class="verseInput 0" list="versesDatalist0" autocomplete="off">
+                <select name="version" class="versionInput 0" id="versionInput0">
+                    <option value="RVR60">Reina Valera 1960</option>
+                </select>
+            </div>
+            <div class="btns" id="btns">
+                <div class="newBtn btn" id="newBtn" onclick="newIn()">
+                    <p class="newBtnText" id="newBtnText"><i class="fas fa-plus"></i> Nuevo</p>
+                </div>
+                <div class="okBtn btn" id="okBtn" onclick="okIn()">
+                    <p class="okBtnText" id="okBtnText"><i class="fas fa-check"></i> OK</p>
+                </div>
+                <div class="tutorialBtn btn" id="tutorialBtn" beforeRightValue="0">
+                    <p class="tutorialBtnText" id="tutorialBtnText"><i class="fas fa-question"></i> Tutorial</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="functions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

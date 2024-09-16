@@ -1,0 +1,111 @@
+{
+    "popupsArray": [{
+        "name": "copiado",
+        "html": "<div class=\"okPopup popup\" id=\"okPopup\">\n    <div class=\"popupContainer\" id=\"popupContainer\">\n       <div class=\"closePopupBtn\" onclick=\"del('okPopup')\">\n          <i class=\"fas fa-times\"></i>\n        </div>\n        <div class=\"popupIcon\" id=\"popupIcon\">\n            <i class=\"far fa-check-circle\"></i>\n     </div>\n        <div class=\"popupTextContainer\" id=\"popupTextContainer\">\n          <p class=\"popupText\" id=\"popupText\">Copiado</p>\n       </div>\n    </div>\n</div>",
+        "properties": {
+            "title": "Copiado",
+            "id": "okPopup",
+            "descriptionText": null,
+            "backgroundColor": "rgb(81,214,81)",
+            "buttons": [{
+                "name": "close",
+                "type": "fontawesome",
+                "details": {
+                    "type": "fas",
+                    "id": "fa-times"
+                }
+            }],
+            "icon": {
+                "type": "fontawesome",
+                "details": {
+                    "type": "far",
+                    "id": "fa-check-circle"
+                }
+            }
+        }
+    }, {
+        "name": "cargando",
+        "html": "<div class=\"loadingPopUp popup\" id=\"loadingPopUp\">\n            <div class=\"popupContainer\" id=\"popupContainer\" style=\"background: rgb(97, 97, 97);\">\n                <div class=\"popupIcon\" id=\"popupIcon\">\n                    <svg class=\"spinner\" viewBox=\"0 0 50 50\">\n                            <circle class=\"path\" cx=\"25\" cy=\"25\" r=\"20\" fill=\"none\" stroke-width=\"5\"></circle>\n                        </svg>\n                </div>\n                <div class=\"popupTextContainer\" id=\"popupTextContainer\">\n                    <p class=\"popupText\" id=\"popupText\" style=\"font-size: 17px;\">Cargando...</p>\n                    </div>\n            </div>\n        </div>",
+        "properties": {
+            "title": "Cargando",
+            "id": "loadingPopup",
+            "descriptionText": null,
+            "backgroundColor": "rgb(97,97,97)",
+            "buttons": [{
+                "name": "close",
+                "type": "fontawesome",
+                "details": {
+                    "type": "fas",
+                    "id": "fa-times"
+                }
+            }],
+            "icon": {
+                "type": "fontawesome",
+                "details": {
+                    "type": "far",
+                    "id": "fa-check-circle"
+                }
+            }
+        }
+    }, {
+        "name": "error",
+        "html": "<div class=\"requestErrorPopup popup\" id=\"requestErrorPopup\">\n            <div class=\"popupContainer\" id=\"popupContainer\" style=\"background: #f44;\">\n                <div class=\"closePopupBtn\" onclick=\"del('requestErrorPopup')\"><i class=\"fas fa-times\"></i></div>\n                <div class=\"popupIcon\" id=\"popupIcon\">\n                    <i class=\"fas fa-exclamation\"></i>\n                </div>\n                <div class=\"popupTextContainer\" id=\"popupTextContainer\">\n                    <p class=\"popupText\" id=\"popupText\" style=\"font-size: 18px;\">Error</p>\n                    \n                </div>\n            </div>\n        </div>",
+        "properties": {
+            "title": "Error",
+            "id": "requestErrorPopup",
+            "descriptionText": null,
+            "backgroundColor": "#f44",
+            "buttons": [{
+                "name": "close",
+                "type": "fontawesome",
+                "details": {
+                    "type": "fas",
+                    "id": "fa-times"
+                }
+            }],
+            "icon": {
+                "type": "fontawesome",
+                "details": {
+                    "type": "fas",
+                    "id": "fa-exclamation"
+                }
+            }
+        }
+    }, {
+        "name": "copying error",
+        "html": "<div class=\"copyingErrorPopup popup\" id=\"copyingErrorPopup\">\n            <div class=\"popupContainer\" id=\"popupContainer\" style=\"background: #f44;\">\n                <div class=\"closePopupBtn\" onclick=\"del('copyingErrorPopup')\"><i class=\"fas fa-times\"></i></div>\n                <div class=\"popupIcon\" id=\"popupIcon\">\n                    <i class=\"fas fa-exclamation\"></i>\n                </div>\n                <div class=\"popupTextContainer\" id=\"popupTextContainer\">\n                    <p class=\"popupText\" id=\"popupText\" style=\"font-size: 18px;\">Error</p>\n                    <p class=\"popupBody\" id=\"popupBody\" style=\"font-size: 12px;\">Se ha hecho click fuera de la página durante el proceso</p>\n                </div>\n        <div class=\"retryBtnContainer\" id=\"retryBtnContainer\">\n            <div class=\"retryBtn\" id=\"retryBtn\" onclick=\"copiar()\">\n                <p class=\"retryBtnText\" id=\"retryBtnText\">Reintentar</p>\n            </div>\n        </div>\n        \n            </div>\n        </div>",
+        "properties": {
+            "title": "Error",
+            "id": "copyingErrorPopup",
+            "descriptionText": {
+                "content": "Se ha hecho click fuera de la página durante el proceso",
+                "fontSize": "12px"
+            },
+            "backgroundColor": "#f44",
+            "buttons": [{
+                "name": "close",
+                "type": "fontawesome",
+                "details": {
+                    "type": "fas",
+                    "id": "fa-times"
+                }
+            }, {
+                "name": "retry",
+                "type": "htmlElement",
+                "selector": ".popup#copyingErrorPopup > #retryBtnContainer",
+                "details": {
+                    "type": "div",
+                    "id": "retryBtnContainer",
+                    "contentType": "text"
+                }
+            }],
+            "icon": {
+                "type": "fontawesome",
+                "details": {
+                    "type": "fas",
+                    "id": "fa-exclamation"
+                }
+            }
+        }
+    }]
+}
